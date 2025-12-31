@@ -1,0 +1,28 @@
+[
+  {
+    "title": "GBPIETsync an Online Attendance Management System",
+    "description": "This web app is designed to simplify and digitize the attendance process for faculty members. Teachers can easily create classes, mark attendance dynamically, analyze student records, and even generate attendance reports in PDF format — all through a clean and interactive interface.",
+    "tech": [
+      "🖥️ Deployed on: Vercel 🧠 Tech Stack & Tools Used:  💻 Frontend: HTML",
+      "CSS",
+      "JavaScript",
+      "React.js  🎨 Styling: Tailwind CSS",
+      "Bootstrap  🔥 Backend & Database: Firebase (Authentication + Realtime Database)  📄 Libraries: jsPDF & jsPDF-Autotable (for report generation)"
+    ],
+    "image": "https://res.cloudinary.com/ds6xwzglf/image/upload/v1767032421/portfolio/lcvae6bmr6llqrhtawvv.png",
+    "github": "https://github.com/chiragkashyap267/gbpietsync",
+    "live": "https://gbpietsync.vercel.app/"
+  },
+  {
+    "title": "Forecastly an api based weather forecasting web application",
+    "description": "The API-Based Weather Web Application is a responsive and user-friendly web app that provides real-time weather information for any location worldwide. It fetches live data from a trusted weather API and displays accurate weather conditions in an intuitive interface.",
+    "tech": [
+      "⚡ React.js  ⚡ Axios  ⚡ HTML",
+      "CSS",
+      "JavaScript  ⚡ Bootstrap"
+    ],
+    "image": "https://res.cloudinary.com/ds6xwzglf/image/upload/v1767032640/portfolio/zqgmodbsotjjvuqgu8yi.png",
+    "github": "https://github.com/chiragkashyap267/weatherapp",
+    "live": "https://weatherapp-sepia-beta.vercel.app/"
+  }
+]

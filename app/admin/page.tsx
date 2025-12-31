@@ -1,0 +1,365 @@
+"use client";
+
+import {
+  Box,
+  Typography,
+  TextField,
+  Button,
+  Stack,
+  Tabs,
+  Tab,
+  Divider,
+} from "@mui/material";
+import { useEffect, useState } from "react";
+
+/* ================= TYPES ================= */
+
+type Project = {
+  title: string;
+  description: string;
+  tech: string[];
+  image: string;
+  github?: string;
+  live?: string;
+};
+
+type Certificate = {
+  title: string;
+  image: string;
+  link?: string;
+};
+
+/* ================= PAGE ================= */
+
+export default function AdminPage() {
+  const [password, setPassword] = useState("");
+  const [authorized, setAuthorized] = useState(false);
+  const [tab, setTab] = useState(0);
+
+  if (!authorized) {
+    return (
+      <Center>
+        <Box p={4} border="1px solid #222" borderRadius={2}>
+          <Typography mb={2}>Admin Login</Typography>
+          <TextField
+            type="password"
+            label="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            fullWidth
+          />
+          <Button
+            variant="contained"
+            fullWidth
+            sx={{ mt: 2 }}
+            onClick={() =>
+              password === "chirag267"
+                ? setAuthorized(true)
+                : alert("Wrong password")
+            }
+          >
+            Login
+          </Button>
+        </Box>
+      </Center>
+    );
+  }
+
+  return (
+    <Box p={{ xs: 2, md: 4 }}>
+      <Typography variant="h4" mb={2}>
+        Admin Panel
+      </Typography>
+
+      <Tabs value={tab} onChange={(_, v) => setTab(v)} sx={{ mb: 3 }}>
+        <Tab label="Projects" />
+        <Tab label="Certificates" />
+      </Tabs>
+
+      <Divider sx={{ mb: 3 }} />
+
+      {tab === 0 && <ProjectsAdmin />}
+      {tab === 1 && <CertificatesAdmin />}
+    </Box>
+  );
+}
+
+/* ================= PROJECTS ADMIN ================= */
+
+function ProjectsAdmin() {
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [tech, setTech] = useState("");
+  const [image, setImage] = useState("");
+  const [github, setGithub] = useState("");
+  const [live, setLive] = useState("");
+
+  useEffect(() => {
+    async function load() {
+      try {
+        const res = await fetch("/api/projects");
+        if (!res.ok) throw new Error("Failed to load projects");
+        const data = await res.json();
+        setProjects(Array.isArray(data) ? data : []);
+      } catch (err) {
+        console.error("Projects load error:", err);
+        setProjects([]);
+      }
+    }
+    load();
+  }, []);
+
+  async function uploadImage(file: File) {
+    const form = new FormData();
+    form.append("file", file);
+    const res = await fetch("/api/upload", { method: "POST", body: form });
+    const data = await res.json();
+    return data.url;
+  }
+
+  async function addProject() {
+    if (!title || !image) {
+      alert("Title & image required");
+      return;
+    }
+
+    const payload = {
+      title,
+      description,
+      tech: tech.split(",").map((t) => t.trim()),
+      image,
+      github: github || undefined,
+      live: live || undefined,
+    };
+
+    const res = await fetch("/api/projects", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    if (!res.ok) {
+      console.error(await res.text());
+      alert("Failed to save project");
+      return;
+    }
+
+    setProjects((prev) => [...prev, payload]);
+    setTitle("");
+    setDescription("");
+    setTech("");
+    setImage("");
+    setGithub("");
+    setLive("");
+  }
+
+  async function deleteProject(index: number) {
+    await fetch("/api/projects", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ index }),
+    });
+    setProjects((prev) => prev.filter((_, i) => i !== index));
+  }
+
+  return (
+    <Stack spacing={3}>
+      <Typography fontWeight={600}>Add Project</Typography>
+
+      <TextField
+        label="Title"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+      />
+      <TextField
+        label="Description"
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+      />
+      <TextField
+        label="Tech (comma separated)"
+        value={tech}
+        onChange={(e) => setTech(e.target.value)}
+      />
+      <TextField
+        label="GitHub Repository URL"
+        value={github}
+        onChange={(e) => setGithub(e.target.value)}
+        placeholder="https://github.com/username/repo"
+        size="small"
+      />
+
+      <TextField
+        label="Live Deployed URL"
+        value={live}
+        onChange={(e) => setLive(e.target.value)}
+        placeholder="https://yourapp.vercel.app"
+        size="small"
+      />
+
+      <Button variant="outlined" component="label">
+        Upload Image
+        <input
+          hidden
+          type="file"
+          accept="image/*"
+          onChange={async (e) => {
+            if (e.target.files?.[0])
+              setImage(await uploadImage(e.target.files[0]));
+          }}
+        />
+      </Button>
+
+      {image && <Typography color="gray">Image uploaded</Typography>}
+
+      <Button variant="contained" onClick={addProject}>
+        Save Project
+      </Button>
+
+      <Divider />
+
+      <Typography fontWeight={600}>Existing Projects</Typography>
+
+      {projects.map((p, i) => (
+        <Box key={i} display="flex" justifyContent="space-between">
+          <Typography>{p.title}</Typography>
+          <Button color="error" onClick={() => deleteProject(i)}>
+            Delete
+          </Button>
+        </Box>
+      ))}
+    </Stack>
+  );
+}
+
+/* ================= CERTIFICATES ADMIN ================= */
+
+function CertificatesAdmin() {
+  const [certs, setCerts] = useState<Certificate[]>([]);
+  const [title, setTitle] = useState("");
+  const [link, setLink] = useState("");
+  const [image, setImage] = useState("");
+
+  useEffect(() => {
+    async function load() {
+      try {
+        const res = await fetch("/api/certificates");
+        if (!res.ok) throw new Error("Failed to load certificates");
+        const data = await res.json();
+        setCerts(Array.isArray(data) ? data : []);
+      } catch (err) {
+        console.error("Certificates load error:", err);
+        setCerts([]);
+      }
+    }
+    load();
+  }, []);
+
+  async function uploadImage(file: File) {
+    const form = new FormData();
+    form.append("file", file);
+    const res = await fetch("/api/upload", { method: "POST", body: form });
+    const data = await res.json();
+    return data.url;
+  }
+
+  async function addCert() {
+    if (!title || !image) {
+      alert("Title & image required");
+      return;
+    }
+
+    const payload = { title, image, link };
+
+    const res = await fetch("/api/certificates", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    if (!res.ok) {
+      console.error(await res.text());
+      alert("Failed to save certificate");
+      return;
+    }
+
+    setCerts((prev) => [...prev, payload]);
+    setTitle("");
+    setLink("");
+    setImage("");
+  }
+
+  async function deleteCert(index: number) {
+    await fetch("/api/certificates", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ index }),
+    });
+    setCerts((prev) => prev.filter((_, i) => i !== index));
+  }
+
+  return (
+    <Stack spacing={3}>
+      <Typography fontWeight={600}>Add Certificate</Typography>
+
+      <TextField
+        label="Title"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+      />
+      <TextField
+        label="Link (optional)"
+        value={link}
+        onChange={(e) => setLink(e.target.value)}
+      />
+
+      <Button variant="outlined" component="label">
+        Upload Image
+        <input
+          hidden
+          type="file"
+          accept="image/*"
+          onChange={async (e) => {
+            if (e.target.files?.[0])
+              setImage(await uploadImage(e.target.files[0]));
+          }}
+        />
+      </Button>
+
+      {image && <Typography color="gray">Image uploaded</Typography>}
+
+      <Button variant="contained" onClick={addCert}>
+        Save Certificate
+      </Button>
+
+      <Divider />
+
+      <Typography fontWeight={600}>Existing Certificates</Typography>
+
+      {certs.map((c, i) => (
+        <Box key={i} display="flex" justifyContent="space-between">
+          <Typography>{c.title}</Typography>
+          <Button color="error" onClick={() => deleteCert(i)}>
+            Delete
+          </Button>
+        </Box>
+      ))}
+    </Stack>
+  );
+}
+
+/* ================= CENTER ================= */
+
+function Center({ children }: { children: React.ReactNode }) {
+  return (
+    <Box
+      minHeight="100vh"
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+    >
+      {children}
+    </Box>
+  );
+}
