@@ -24,5 +24,17 @@
     "image": "https://res.cloudinary.com/ds6xwzglf/image/upload/v1767032640/portfolio/zqgmodbsotjjvuqgu8yi.png",
     "github": "https://github.com/chiragkashyap267/weatherapp",
     "live": "https://weatherapp-sepia-beta.vercel.app/"
+  },
+  {
+    "title": "WordWise ",
+    "description": "An api based web application of dictionary ",
+    "tech": [
+      "⚡ React.js  ⚡ Axios  ⚡ HTML",
+      "CSS",
+      "JavaScript  ⚡ Bootstrap"
+    ],
+    "image": "https://res.cloudinary.com/ds6xwzglf/image/upload/v1767275495/portfolio/y2qr3vauqyifrtfu68a1.png",
+    "github": "https://github.com/chiragkashyap267/front-end-projects/blob/main/index.html",
+    "live": "https://chiragkashyap267.github.io/front-end-projects/"
   }
 ]
