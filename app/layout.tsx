@@ -17,6 +17,10 @@ export const metadata = {
   title: "Chirag Kashyap | Full Stack Web Developer",
   description:
     "Chirag Kashyap – Full Stack Web Developer, MCA student skilled in React, Next.js, Firebase, and modern web technologies.",
+
+    icons:{
+      icon: "/favicon.png"
+    }
 };
 
 export default function RootLayout({
