@@ -4,6 +4,7 @@ import Footer from "./components/Footer";
 import { Space_Grotesk } from "next/font/google";
 import CursorGlow from "./components/CursorGlow";
 import ScrollProgress from "./components/ScrollProgress";
+import LenisProvider from "./components/LenisProvider";
 
 /* ---------- LOAD FONT ---------- */
 const spaceGrotesk = Space_Grotesk({
@@ -31,12 +32,14 @@ export default function RootLayout({
   return (
     <html lang="en" className={spaceGrotesk.variable}>
       <body>
+        <LenisProvider>
         <Providers>
           <ScrollProgress />
           <CursorGlow/>
           {children}
           <Footer />
         </Providers>
+        </LenisProvider>
       </body>
     </html>
   );

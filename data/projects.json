@@ -36,5 +36,15 @@
     "image": "https://res.cloudinary.com/ds6xwzglf/image/upload/v1767275495/portfolio/y2qr3vauqyifrtfu68a1.png",
     "github": "https://github.com/chiragkashyap267/front-end-projects/blob/main/index.html",
     "live": "https://chiragkashyap267.github.io/front-end-projects/"
+  },
+  {
+    "title": "A E-commerce online store for selling digital products",
+    "description": "Graphixa is a modern, production-ready full-stack web application designed for selling, managing, and securely delivering digital products. The platform focuses on performance, scalability, admin control, and a smooth user experience, built using industry-standard tools and best practices.  The application includes a public storefront, secure admin dashboard, digital file delivery system, and cloud-based asset management, all deployed with a production-grade architecture.",
+    "tech": [
+      "Frontend  Next.js 14 (App Router)  React 18  TypeScript  Tailwind CSS  ShadCN UI  Framer Motion  Lenis Smooth Scroll  Backend / APIs  Next.js API Routes  Node.js Runtime  Firebase Admin SDK  Firestore (Database)  Cloudinary (Media Storage)  Authentication & Security  Secure admin-only API routes  Environment-based configuration  Server-side validation  Deployment & DevOps  Vercel  Environment variable–based secrets  Production-safe build configuration"
+    ],
+    "image": "https://res.cloudinary.com/ds6xwzglf/image/upload/v1767866635/portfolio/ri1eiywiup219rvgkbu0.png",
+    "github": "https://github.com/chiragkashyap267/graphixa",
+    "live": "https://graphixa.vercel.app/"
   }
 ]
