@@ -2,13 +2,32 @@ import { NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
 
+// Use environment variable for deployed version, fallback to file for local development
+const isProduction = process.env.NODE_ENV === "production";
 const filePath = path.join(
   process.cwd(),
   "data",
   "projects.json"
 );
 
+// In-memory cache for production
+let cachedProjects: any[] | null = null;
+
 function readData() {
+  // For production/Vercel, use environment variable and in-memory cache
+  if (isProduction) {
+    if (!cachedProjects) {
+      const envData = process.env.PROJECTS_DATA;
+      try {
+        cachedProjects = envData ? JSON.parse(envData) : [];
+      } catch {
+        cachedProjects = [];
+      }
+    }
+    return cachedProjects;
+  }
+
+  // For local development, use filesystem
   if (!fs.existsSync(filePath)) {
     fs.writeFileSync(filePath, JSON.stringify([]));
   }
@@ -17,6 +36,15 @@ function readData() {
 }
 
 function writeData(data: any) {
+  // For production/Vercel, update in-memory cache
+  if (isProduction) {
+    cachedProjects = data;
+    console.log("Projects updated in memory. Note: Changes persist only during current session.");
+    console.log("To persist changes, update PROJECTS_DATA environment variable with:", JSON.stringify(data));
+    return;
+  }
+
+  // For local development, write to filesystem
   fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
 }
 

@@ -21,11 +21,10 @@ export default function Providers({
     if (isTouch) return;
 
     const lenis = new Lenis({
-      duration: 1.05, // smooth but responsive
-      easing: (t: number) =>
-        Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      duration: 1.5, // increased for smoother feel
+      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
-      wheelMultiplier: 1,
+      wheelMultiplier: 1.2, // slightly faster response
     });
 
     let rafId: number;

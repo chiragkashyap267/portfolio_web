@@ -76,7 +76,7 @@ export default function Projects() {
         )}
 
         {projects.map((project, index) => (
-          <Grid key={index} size={{ xs: 12, md: 5 }}>
+          <Grid key={index} size={{ xs: 12, md: 6 }}>
             <MagneticCard>
             <ProjectCard project={project} />
             </MagneticCard>
@@ -104,23 +104,24 @@ function ProjectCard({ project }: { project: Project }) {
         sx={{
           position: "relative",
           height: "100%",
-          borderRadius: 4,
+          borderRadius: 3,
           overflow: "hidden",
           background:
-            "linear-gradient(145deg, rgba(20,20,20,0.9), rgba(10,10,10,0.9))",
-          border: "1px solid #222",
+            "linear-gradient(145deg, rgba(20,20,20,0.95), rgba(10,10,10,0.95))",
+          border: "2px solid #2a2a2a",
           backdropFilter: "blur(8px)",
-          transition: "0.4s ease",
+          transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
+          boxShadow: "0 8px 24px rgba(0,0,0,0.4)",
           "&:hover": {
-            boxShadow:
-              "0 0 40px rgba(255,212,0,0.45)",
+            boxShadow: "0 12px 40px rgba(255,212,0,0.25), inset 0 0 20px rgba(255,212,0,0.1)",
             borderColor: "#FFD400",
+            transform: "translateY(-8px)",
           },
           "&:hover .overlay": {
             opacity: 1,
           },
           "&:hover img": {
-            transform: "scale(1.05)",
+            transform: "scale(1.08)",
           },
         }}
       >
@@ -142,36 +143,63 @@ function ProjectCard({ project }: { project: Project }) {
         )}
 
         {/* CONTENT */}
-        <Box p={4}>
-          <Typography variant="h6" fontWeight={600}>
+        <Box p={3.5}>
+          <Typography 
+            variant="h6" 
+            fontWeight={700}
+            sx={{
+              fontSize: "1.1rem",
+              lineHeight: 1.3,
+              wordBreak: "break-word",
+              overflow: "hidden",
+              display: "-webkit-box",
+              WebkitLineClamp: 2,
+              WebkitBoxOrient: "vertical",
+              color: "#fff",
+              mb: 1.5,
+            }}
+          >
             {project.title}
           </Typography>
 
           <Typography
-            color="gray"
-            mt={1}
+            color="#b0b0b0"
+            mt={0.5}
             mb={2}
-            lineHeight={1.6}
+            lineHeight={1.5}
+            sx={{
+              fontSize: "0.95rem",
+              display: "-webkit-box",
+              WebkitLineClamp: 3,
+              WebkitBoxOrient: "vertical",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+            }}
           >
             {project.description}
           </Typography>
 
           <Stack
             direction="row"
-            spacing={1}
+            spacing={0.75}
             flexWrap="wrap"
-            rowGap={1}
+            rowGap={0.75}
+            sx={{ mt: 1.5 }}
           >
             {project.tech?.map((t) => (
               <Box
                 key={t}
                 sx={{
-                  px: 1.2,
-                  py: 0.4,
-                  borderRadius: 2,
-                  fontSize: 12,
-                  border: "1px solid #333",
+                  px: 1,
+                  py: 0.5,
+                  borderRadius: 1.5,
+                  fontSize: "0.8rem",
+                  border: "1.5px solid #FFD400",
                   color: "#FFD400",
+                  backgroundColor: "rgba(255, 212, 0, 0.08)",
+                  fontWeight: 500,
+                  wordBreak: "break-word",
+                  whiteSpace: "normal",
                 }}
               >
                 {t}
