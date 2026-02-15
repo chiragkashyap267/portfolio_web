@@ -217,18 +217,48 @@ function ProjectsAdmin() {
         Save Project
       </Button>
 
-      <Divider />
+      <Divider sx={{ my: 3 }} />
 
-      <Typography fontWeight={600}>Existing Projects</Typography>
+      <Typography fontWeight={600} mb={2}>Existing Projects ({projects.length})</Typography>
 
-      {projects.map((p, i) => (
-        <Box key={i} display="flex" justifyContent="space-between">
-          <Typography>{p.title}</Typography>
-          <Button color="error" onClick={() => deleteProject(i)}>
-            Delete
-          </Button>
-        </Box>
-      ))}
+      {projects.length === 0 ? (
+        <Typography color="gray">No projects yet</Typography>
+      ) : (
+        <Stack spacing={2}>
+          {projects.map((p, i) => (
+            <Box 
+              key={i} 
+              display="flex" 
+              justifyContent="space-between"
+              alignItems="center"
+              sx={{
+                p: 2,
+                border: "1px solid #333",
+                borderRadius: 1,
+                backgroundColor: "rgba(255, 212, 0, 0.05)",
+                "&:hover": {
+                  backgroundColor: "rgba(255, 212, 0, 0.1)",
+                  borderColor: "#FFD400",
+                }
+              }}
+            >
+              <Box flex={1}>
+                <Typography fontWeight={500}>{p.title}</Typography>
+                <Typography variant="caption" color="gray">{p.description?.substring(0, 60)}...</Typography>
+              </Box>
+              <Button 
+                color="error" 
+                variant="outlined"
+                size="small"
+                onClick={() => deleteProject(i)}
+                sx={{ ml: 2 }}
+              >
+                Delete
+              </Button>
+            </Box>
+          ))}
+        </Stack>
+      )}
     </Stack>
   );
 }
@@ -333,18 +363,45 @@ function CertificatesAdmin() {
         Save Certificate
       </Button>
 
-      <Divider />
+      <Divider sx={{ my: 3 }} />
 
-      <Typography fontWeight={600}>Existing Certificates</Typography>
+      <Typography fontWeight={600} mb={2}>Existing Certificates ({certs.length})</Typography>
 
-      {certs.map((c, i) => (
-        <Box key={i} display="flex" justifyContent="space-between">
-          <Typography>{c.title}</Typography>
-          <Button color="error" onClick={() => deleteCert(i)}>
-            Delete
-          </Button>
-        </Box>
-      ))}
+      {certs.length === 0 ? (
+        <Typography color="gray">No certificates yet</Typography>
+      ) : (
+        <Stack spacing={2}>
+          {certs.map((c, i) => (
+            <Box 
+              key={i} 
+              display="flex" 
+              justifyContent="space-between"
+              alignItems="center"
+              sx={{
+                p: 2,
+                border: "1px solid #333",
+                borderRadius: 1,
+                backgroundColor: "rgba(255, 212, 0, 0.05)",
+                "&:hover": {
+                  backgroundColor: "rgba(255, 212, 0, 0.1)",
+                  borderColor: "#FFD400",
+                }
+              }}
+            >
+              <Typography fontWeight={500}>{c.title}</Typography>
+              <Button 
+                color="error" 
+                variant="outlined"
+                size="small"
+                onClick={() => deleteCert(i)}
+                sx={{ ml: 2 }}
+              >
+                Delete
+              </Button>
+            </Box>
+          ))}
+        </Stack>
+      )}
     </Stack>
   );
 }
