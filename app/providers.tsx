@@ -1,10 +1,16 @@
 "use client";
 
-import { ThemeProvider, CssBaseline } from "@mui/material";
-import theme from "./theme";
+import { CssBaseline, ThemeProvider } from "@mui/material";
 import Lenis from "@studio-freight/lenis";
 import { useEffect } from "react";
 import BackgroundGrid from "./components/BackgroundGrid";
+import theme from "./theme";
+
+declare global {
+  interface Window {
+    __lenis?: Lenis;
+  }
+}
 
 export default function Providers({
   children,
@@ -12,23 +18,22 @@ export default function Providers({
   children: React.ReactNode;
 }) {
   useEffect(() => {
-    // 🚫 Disable Lenis on touch devices (best practice)
-    const isTouch =
-      typeof window !== "undefined" &&
-      ("ontouchstart" in window ||
-        navigator.maxTouchPoints > 0);
-
-    if (isTouch) return;
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+    if (prefersReducedMotion) return;
 
     const lenis = new Lenis({
-      duration: 1.5, // increased for smoother feel
-      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      duration: 1.15,
+      easing: (t: number) => 1 - Math.pow(1 - t, 3),
       smoothWheel: true,
-      wheelMultiplier: 1.2, // slightly faster response
+      wheelMultiplier: 0.95,
+      touchMultiplier: 1,
     });
 
-    let rafId: number;
+    window.__lenis = lenis;
 
+    let rafId = 0;
     const raf = (time: number) => {
       lenis.raf(time);
       rafId = requestAnimationFrame(raf);
@@ -39,6 +44,7 @@ export default function Providers({
     return () => {
       cancelAnimationFrame(rafId);
       lenis.destroy();
+      delete window.__lenis;
     };
   }, []);
 

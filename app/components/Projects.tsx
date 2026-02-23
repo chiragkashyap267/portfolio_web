@@ -11,7 +11,6 @@ import {
 import { motion } from "framer-motion";
 import { FaExternalLinkAlt, FaGithub } from "react-icons/fa";
 import { useEffect, useState } from "react";
-import MagneticCard from "./MagneticCard";
 
 /* ================= TYPES ================= */
 
@@ -65,7 +64,7 @@ export default function Projects() {
         Projects
       </Typography>
 
-      <Grid container spacing={4} justifyContent="center">
+      <Grid container spacing={3} justifyContent="center" sx={{ maxWidth: 1440, mx: "auto" }}>
         {loading && (
           <Typography color="gray">
             Loading projects...
@@ -79,10 +78,8 @@ export default function Projects() {
         )}
 
         {visibleProjects.map((project, index) => (
-          <Grid key={index} size={{ xs: 12, sm: 6, lg: 4 }} sx={{ display: "flex" }}>
-            <MagneticCard>
-              <ProjectCard project={project} />
-            </MagneticCard>
+          <Grid key={index} size={{ xs: 12, sm: 6, md: 4, lg: 3 }} sx={{ display: "flex" }}>
+            <ProjectCard project={project} />
           </Grid>
         ))}
       </Grid>
@@ -93,42 +90,40 @@ export default function Projects() {
 /* ================= PROJECT CARD ================= */
 
 function ProjectCard({ project }: { project: Project }) {
-  const techItems = project.tech.slice(0, 6);
+  const techItems = project.tech.slice(0, 4);
 
   return (
     <motion.div
-      whileHover={{ y: -8 }}
+      whileHover={{ y: -5 }}
       transition={{
         type: "spring",
-        stiffness: 220,
-        damping: 18,
+        stiffness: 260,
+        damping: 22,
       }}
-      style={{ height: "100%", width: "100%" }}
+      style={{ height: "100%", width: "100%", maxWidth: 360, marginInline: "auto" }}
     >
       <Box
         sx={{
           position: "relative",
-          height: "100%",
+          height: { xs: 420, sm: 440 },
           width: "100%",
-          minHeight: { xs: 460, sm: 500 },
-          borderRadius: 4,
+          borderRadius: 3,
           overflow: "hidden",
           display: "flex",
           flexDirection: "column",
           background:
             "linear-gradient(145deg, rgba(20,20,20,0.96), rgba(8,8,8,0.97))",
           border: "1px solid rgba(255, 212, 0, 0.24)",
-          backdropFilter: "blur(10px)",
-          transition: "all 0.35s cubic-bezier(0.4, 0, 0.2, 1)",
+          transition: "all 0.28s cubic-bezier(0.4, 0, 0.2, 1)",
           boxShadow:
-            "0 10px 30px rgba(0, 0, 0, 0.42), inset 0 1px 0 rgba(255,255,255,0.03)",
+            "0 8px 24px rgba(0, 0, 0, 0.38), inset 0 1px 0 rgba(255,255,255,0.03)",
           "&:hover": {
             boxShadow:
-              "0 18px 42px rgba(0,0,0,0.52), 0 0 0 1px rgba(255,212,0,0.48), 0 0 30px rgba(255,212,0,0.2)",
+              "0 14px 34px rgba(0,0,0,0.48), 0 0 0 1px rgba(255,212,0,0.4), 0 0 20px rgba(255,212,0,0.16)",
             borderColor: "rgba(255, 212, 0, 0.54)",
           },
           "&:hover img": {
-            transform: "scale(1.08)",
+            transform: "scale(1.04)",
           },
         }}
       >
@@ -140,10 +135,10 @@ function ProjectCard({ project }: { project: Project }) {
             loading="lazy"
             sx={{
               width: "100%",
-              height: 210,
+              height: 170,
               objectFit: "cover",
               display: "block",
-              transition: "0.35s ease",
+              transition: "0.3s ease",
             }}
           />
         )}
@@ -151,19 +146,19 @@ function ProjectCard({ project }: { project: Project }) {
         {!project.image && (
           <Box
             sx={{
-              height: 210,
+              height: 170,
               background:
                 "radial-gradient(circle at 20% 20%, rgba(255,212,0,0.24), transparent 55%), linear-gradient(120deg, rgba(35,35,35,1), rgba(10,10,10,1))",
             }}
           />
         )}
 
-        <Box p={3} sx={{ display: "flex", flexDirection: "column", flex: 1, gap: 1.5 }}>
+        <Box p={2} sx={{ display: "flex", flexDirection: "column", flex: 1, gap: 1 }}>
           <Typography
             variant="h6"
             fontWeight={700}
             sx={{
-              fontSize: "1.08rem",
+              fontSize: "0.98rem",
               lineHeight: 1.3,
               wordBreak: "break-word",
               overflow: "hidden",
@@ -171,6 +166,7 @@ function ProjectCard({ project }: { project: Project }) {
               WebkitLineClamp: 2,
               WebkitBoxOrient: "vertical",
               color: "#fff",
+              minHeight: "2.6em",
             }}
           >
             {project.title}
@@ -180,13 +176,13 @@ function ProjectCard({ project }: { project: Project }) {
             color="#b0b0b0"
             lineHeight={1.5}
             sx={{
-              fontSize: "0.93rem",
+              fontSize: "0.86rem",
               display: "-webkit-box",
-              WebkitLineClamp: 3,
+              WebkitLineClamp: 2,
               WebkitBoxOrient: "vertical",
               overflow: "hidden",
               textOverflow: "ellipsis",
-              minHeight: "4.2em",
+              minHeight: "3em",
             }}
           >
             {project.description}
@@ -196,9 +192,9 @@ function ProjectCard({ project }: { project: Project }) {
             direction="row"
             spacing={0.8}
             flexWrap="wrap"
-            rowGap={0.8}
+            rowGap={0.7}
             sx={{
-              minHeight: 70,
+              minHeight: 56,
               alignContent: "flex-start",
               overflow: "hidden",
             }}
@@ -214,7 +210,11 @@ function ProjectCard({ project }: { project: Project }) {
                   color: "#FFD400",
                   backgroundColor: "rgba(255, 212, 0, 0.08)",
                   maxWidth: "100%",
+                  height: 22,
                   "& .MuiChip-label": {
+                    px: 0.8,
+                    fontSize: "0.72rem",
+                    lineHeight: 1.2,
                     display: "block",
                     overflow: "hidden",
                     textOverflow: "ellipsis",
@@ -237,7 +237,7 @@ function ProjectCard({ project }: { project: Project }) {
                 alignItems: "center",
                 gap: 0.8,
                 color: "#fff",
-                fontSize: "0.9rem",
+                fontSize: "0.84rem",
                 fontWeight: 600,
                 transition: "color 0.2s ease",
                 "&:hover": { color: "#FFD400" },
@@ -263,7 +263,7 @@ function ProjectCard({ project }: { project: Project }) {
                 alignItems: "center",
                 gap: 0.8,
                 color: "#fff",
-                fontSize: "0.9rem",
+                fontSize: "0.84rem",
                 fontWeight: 600,
                 transition: "color 0.2s ease",
                 "&:hover": { color: "#FFD400" },

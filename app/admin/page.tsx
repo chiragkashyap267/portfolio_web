@@ -29,6 +29,15 @@ type Certificate = {
   link?: string;
 };
 
+type Website = {
+  title: string;
+  description: string;
+  platform: string;
+  category?: string;
+  image?: string;
+  url: string;
+};
+
 /* ================= PAGE ================= */
 
 export default function AdminPage() {
@@ -73,13 +82,15 @@ export default function AdminPage() {
 
       <Tabs value={tab} onChange={(_, v) => setTab(v)} sx={{ mb: 3 }}>
         <Tab label="Projects" />
+        <Tab label="Websites" />
         <Tab label="Certificates" />
       </Tabs>
 
       <Divider sx={{ mb: 3 }} />
 
       {tab === 0 && <ProjectsAdmin />}
-      {tab === 1 && <CertificatesAdmin />}
+      {tab === 1 && <WebsitesAdmin />}
+      {tab === 2 && <CertificatesAdmin />}
     </Box>
   );
 }
@@ -272,6 +283,210 @@ function ProjectsAdmin() {
                 variant="outlined"
                 size="small"
                 onClick={() => deleteProject(i)}
+                sx={{ ml: 2 }}
+              >
+                Delete
+              </Button>
+            </Box>
+          ))}
+        </Stack>
+      )}
+    </Stack>
+  );
+}
+
+/* ================= WEBSITES ADMIN ================= */
+
+function WebsitesAdmin() {
+  const [websites, setWebsites] = useState<Website[]>([]);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [platform, setPlatform] = useState("");
+  const [category, setCategory] = useState("");
+  const [url, setUrl] = useState("");
+  const [image, setImage] = useState("");
+
+  useEffect(() => {
+    async function load() {
+      try {
+        const res = await fetch("/api/websites", { cache: "no-store" });
+        if (!res.ok) throw new Error("Failed to load websites");
+        const data = await res.json();
+        setWebsites(Array.isArray(data) ? data : []);
+      } catch (err) {
+        console.error("Websites load error:", err);
+        setWebsites([]);
+      }
+    }
+    load();
+  }, []);
+
+  async function uploadImage(file: File) {
+    const form = new FormData();
+    form.append("file", file);
+    const res = await fetch("/api/upload", { method: "POST", body: form });
+    const data = await res.json();
+    return data.url;
+  }
+
+  async function addWebsite() {
+    if (!title || !platform || !url) {
+      alert("Title, platform & website URL are required");
+      return;
+    }
+
+    const payload = {
+      title,
+      description,
+      platform,
+      category: category || undefined,
+      image: image || undefined,
+      url,
+    };
+
+    const res = await fetch("/api/websites", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    if (!res.ok) {
+      const errorBody = await res.json().catch(() => null);
+      console.error(errorBody);
+      alert(errorBody?.detail || errorBody?.error || "Failed to save website");
+      return;
+    }
+
+    const result = await res.json();
+    if (Array.isArray(result?.websites)) {
+      setWebsites(result.websites);
+    } else {
+      setWebsites((prev) => [...prev, payload]);
+    }
+
+    setTitle("");
+    setDescription("");
+    setPlatform("");
+    setCategory("");
+    setImage("");
+    setUrl("");
+  }
+
+  async function deleteWebsite(index: number) {
+    const res = await fetch("/api/websites", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ index }),
+    });
+
+    if (!res.ok) {
+      alert("Failed to delete website");
+      return;
+    }
+
+    const result = await res.json();
+    if (Array.isArray(result?.websites)) {
+      setWebsites(result.websites);
+      return;
+    }
+
+    setWebsites((prev) => prev.filter((_, i) => i !== index));
+  }
+
+  return (
+    <Stack spacing={3}>
+      <Typography fontWeight={600}>Add Live Website</Typography>
+
+      <TextField
+        label="Website Title"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+      />
+      <TextField
+        label="Platform (WordPress / Shopify)"
+        value={platform}
+        onChange={(e) => setPlatform(e.target.value)}
+      />
+      <TextField
+        label="Category (optional)"
+        value={category}
+        onChange={(e) => setCategory(e.target.value)}
+      />
+      <TextField
+        label="Description (optional)"
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+      />
+      <TextField
+        label="Live Website URL"
+        value={url}
+        onChange={(e) => setUrl(e.target.value)}
+        placeholder="https://example.com"
+      />
+
+      <Button variant="outlined" component="label">
+        Upload Preview Image (optional)
+        <input
+          hidden
+          type="file"
+          accept="image/*"
+          onChange={async (e) => {
+            if (e.target.files?.[0]) {
+              setImage(await uploadImage(e.target.files[0]));
+            }
+          }}
+        />
+      </Button>
+
+      {image && <Typography color="gray">Preview image uploaded</Typography>}
+
+      <Button variant="contained" onClick={addWebsite}>
+        Save Website
+      </Button>
+
+      <Divider sx={{ my: 3 }} />
+
+      <Typography fontWeight={600} mb={2}>
+        Existing Websites ({websites.length})
+      </Typography>
+
+      {websites.length === 0 ? (
+        <Typography color="gray">No website links yet</Typography>
+      ) : (
+        <Stack spacing={2}>
+          {websites.map((w, i) => (
+            <Box
+              key={i}
+              display="flex"
+              justifyContent="space-between"
+              alignItems="center"
+              sx={{
+                p: 2,
+                border: "1px solid #333",
+                borderRadius: 1,
+                backgroundColor: "rgba(255, 212, 0, 0.05)",
+                "&:hover": {
+                  backgroundColor: "rgba(255, 212, 0, 0.1)",
+                  borderColor: "#FFD400",
+                },
+              }}
+            >
+              <Box flex={1}>
+                <Typography fontWeight={500}>
+                  {w.title}{" "}
+                  <Typography component="span" color="#FFD400" fontWeight={600}>
+                    [{w.platform}]
+                  </Typography>
+                </Typography>
+                <Typography variant="caption" color="gray">
+                  {w.url}
+                </Typography>
+              </Box>
+              <Button
+                color="error"
+                variant="outlined"
+                size="small"
+                onClick={() => deleteWebsite(i)}
                 sx={{ ml: 2 }}
               >
                 Delete

@@ -22,6 +22,7 @@ const navLinks = [
   { label: "Experience", id: "experience" },
   { label: "Education", id: "education" },
   { label: "Projects", id: "projects" },
+  { label: "Websites", id: "websites" },
   { label: "Certificates", id: "certificates" },
   { label: "Contact", id: "contact" },
 ];
@@ -32,7 +33,15 @@ export default function Navbar() {
   function scrollTo(id: string) {
     setOpen(false);
     const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: "smooth" });
+    if (!el) return;
+
+    const lenis = window.__lenis;
+    if (lenis) {
+      lenis.scrollTo(el, { offset: -72, duration: 1.05 });
+      return;
+    }
+
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
   return (

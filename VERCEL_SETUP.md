@@ -17,13 +17,14 @@ Set these in Vercel Project Settings -> Environment Variables:
 Optional:
 
 - `PROJECTS_DATA_PUBLIC_ID` (default: `portfolio/projects-data`)
+- `WEBSITES_DATA_PUBLIC_ID` (default: `portfolio/websites-data`)
 
 ## How it works now
 
 - Production:
-  Projects are read/written from Cloudinary JSON.
+  Projects and Websites are read/written from Cloudinary JSON.
 - Local:
-  Projects are read/written from local `data/projects.json`.
+  Projects and Websites are read/written from local JSON files.
 
 ## Adding projects
 
