@@ -1,6 +1,42 @@
 import { NextResponse } from "next/server";
 import { getProjects, normalizeProject, saveProjects } from "@/app/lib/projectStore";
 
+function getErrorMessage(error: unknown, fallback: string) {
+  if (error instanceof Error && error.message) {
+    return error.message;
+  }
+
+  if (typeof error === "string" && error.trim()) {
+    return error;
+  }
+
+  if (error && typeof error === "object") {
+    const errObj = error as {
+      message?: unknown;
+      error?: { message?: unknown };
+      http_code?: unknown;
+    };
+
+    if (typeof errObj.message === "string" && errObj.message.trim()) {
+      return errObj.message;
+    }
+
+    if (
+      errObj.error &&
+      typeof errObj.error.message === "string" &&
+      errObj.error.message.trim()
+    ) {
+      return errObj.error.message;
+    }
+
+    if (typeof errObj.http_code === "number") {
+      return `${fallback} (HTTP ${errObj.http_code})`;
+    }
+  }
+
+  return fallback;
+}
+
 /* ================= GET ================= */
 export async function GET() {
   try {
@@ -8,12 +44,9 @@ export async function GET() {
     return NextResponse.json(projects);
   } catch (err) {
     console.error("PROJECT GET ERROR:", err);
-    const errorMessage =
-      err instanceof Error ? err.message : "Failed to load projects";
+    const errorMessage = getErrorMessage(err, "Failed to load projects");
     return NextResponse.json(
-      process.env.NODE_ENV === "development"
-        ? { error: "Failed to load projects", detail: errorMessage }
-        : { error: "Failed to load projects" },
+      { error: "Failed to load projects", detail: errorMessage },
       { status: 500 }
     );
   }
@@ -42,12 +75,9 @@ export async function POST(req: Request) {
     return NextResponse.json({ success: true, projects });
   } catch (err) {
     console.error("PROJECT POST ERROR:", err);
-    const errorMessage =
-      err instanceof Error ? err.message : "Failed to save project";
+    const errorMessage = getErrorMessage(err, "Failed to save project");
     return NextResponse.json(
-      process.env.NODE_ENV === "development"
-        ? { error: "Failed to save project", detail: errorMessage }
-        : { error: "Failed to save project" },
+      { error: "Failed to save project", detail: errorMessage },
       { status: 500 }
     );
   }
@@ -72,8 +102,9 @@ export async function DELETE(req: Request) {
     return NextResponse.json({ success: true, projects });
   } catch (err) {
     console.error("PROJECT DELETE ERROR:", err);
+    const errorMessage = getErrorMessage(err, "Delete failed");
     return NextResponse.json(
-      { error: "Delete failed" },
+      { error: "Delete failed", detail: errorMessage },
       { status: 500 }
     );
   }

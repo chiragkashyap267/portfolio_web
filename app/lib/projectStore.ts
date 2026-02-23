@@ -71,12 +71,19 @@ function normalizeProject(raw: RawProject): Project {
 
 function readLocalFile(): Project[] {
   if (!fs.existsSync(localFilePath)) {
+    if (isProduction) {
+      return [];
+    }
     fs.writeFileSync(localFilePath, JSON.stringify([], null, 2));
   }
 
-  const raw = fs.readFileSync(localFilePath, "utf-8");
-  const data = raw ? JSON.parse(raw) : [];
-  return Array.isArray(data) ? data.map(normalizeProject) : [];
+  try {
+    const raw = fs.readFileSync(localFilePath, "utf-8");
+    const data = raw ? JSON.parse(raw) : [];
+    return Array.isArray(data) ? data.map(normalizeProject) : [];
+  } catch {
+    return [];
+  }
 }
 
 function writeLocalFile(data: Project[]) {
@@ -84,23 +91,15 @@ function writeLocalFile(data: Project[]) {
 }
 
 async function getCloudinaryResourceUrl(): Promise<string | null> {
-  const idsToTry = [cloudinaryPublicId, `${cloudinaryPublicId}.json`];
+  const cloudName = process.env.CLOUDINARY_CLOUD_NAME;
+  if (!cloudName) return null;
 
-  for (const id of idsToTry) {
-    try {
-      const resource = await cloudinary.api.resource(id, {
-        resource_type: "raw",
-      });
-      return resource.secure_url;
-    } catch (error: unknown) {
-      const cloudError = error as { http_code?: number };
-      if (cloudError?.http_code !== 404) {
-        throw error;
-      }
-    }
-  }
+  const encodedId = cloudinaryPublicId
+    .split("/")
+    .map((part) => encodeURIComponent(part))
+    .join("/");
 
-  return null;
+  return `https://res.cloudinary.com/${cloudName}/raw/upload/${encodedId}.json`;
 }
 
 async function readFromCloudinary(): Promise<Project[]> {
@@ -110,8 +109,11 @@ async function readFromCloudinary(): Promise<Project[]> {
       return [];
     }
 
-    const response = await fetch(resourceUrl, { cache: "no-store" });
+    const response = await fetch(`${resourceUrl}?t=${Date.now()}`, { cache: "no-store" });
     if (!response.ok) {
+      if (response.status === 404) {
+        return [];
+      }
       return [];
     }
 
@@ -120,11 +122,6 @@ async function readFromCloudinary(): Promise<Project[]> {
       ? data.map((item) => normalizeProject(item as RawProject))
       : [];
   } catch (error: unknown) {
-    const cloudError = error as { http_code?: number };
-    if (cloudError?.http_code === 404) {
-      return [];
-    }
-
     throw error;
   }
 }
@@ -143,12 +140,6 @@ async function writeToCloudinary(data: Project[]): Promise<void> {
 }
 
 export async function getProjects(): Promise<Project[]> {
-  if (isProduction && !cloudinaryReady) {
-    throw new Error(
-      "Cloudinary environment variables are required in production for project persistence."
-    );
-  }
-
   if (useCloudinaryStore) {
     return readFromCloudinary();
   }
@@ -161,7 +152,7 @@ export async function saveProjects(data: Project[]): Promise<void> {
 
   if (isProduction && !cloudinaryReady) {
     throw new Error(
-      "Cloudinary environment variables are required in production for project persistence."
+      "Cloudinary environment variables are required in Vercel production to add/update projects. Set CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET."
     );
   }
 

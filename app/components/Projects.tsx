@@ -37,7 +37,13 @@ export default function Projects() {
           cache: "no-store",
         });
 
-        if (!res.ok) throw new Error("Failed to load projects");
+        if (!res.ok) {
+          const errorMessage = await parseApiError(
+            res,
+            "Failed to load projects"
+          );
+          throw new Error(errorMessage);
+        }
 
         const data = await res.json();
         const normalized = Array.isArray(data) ? data.map(normalizeProject) : [];
@@ -312,4 +318,25 @@ function normalizeProject(project: RawProject): Project {
     live: project?.live ? String(project.live).trim() : undefined,
     github: project?.github ? String(project.github).trim() : undefined,
   };
+}
+
+async function parseApiError(res: Response, fallback: string) {
+  try {
+    const payload = await res.json();
+    if (typeof payload?.detail === "string" && payload.detail.trim()) {
+      return payload.detail;
+    }
+    if (typeof payload?.error === "string" && payload.error.trim()) {
+      return payload.error;
+    }
+  } catch {
+    try {
+      const text = await res.text();
+      if (text.trim()) return text;
+    } catch {
+      return fallback;
+    }
+  }
+
+  return fallback;
 }

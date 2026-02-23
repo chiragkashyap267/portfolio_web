@@ -5,6 +5,42 @@ import {
   saveWebsites,
 } from "@/app/lib/websitesStore";
 
+function getErrorMessage(error: unknown, fallback: string) {
+  if (error instanceof Error && error.message) {
+    return error.message;
+  }
+
+  if (typeof error === "string" && error.trim()) {
+    return error;
+  }
+
+  if (error && typeof error === "object") {
+    const errObj = error as {
+      message?: unknown;
+      error?: { message?: unknown };
+      http_code?: unknown;
+    };
+
+    if (typeof errObj.message === "string" && errObj.message.trim()) {
+      return errObj.message;
+    }
+
+    if (
+      errObj.error &&
+      typeof errObj.error.message === "string" &&
+      errObj.error.message.trim()
+    ) {
+      return errObj.error.message;
+    }
+
+    if (typeof errObj.http_code === "number") {
+      return `${fallback} (HTTP ${errObj.http_code})`;
+    }
+  }
+
+  return fallback;
+}
+
 /* ================= GET ================= */
 export async function GET() {
   try {
@@ -12,12 +48,9 @@ export async function GET() {
     return NextResponse.json(websites);
   } catch (err) {
     console.error("WEBSITES GET ERROR:", err);
-    const errorMessage =
-      err instanceof Error ? err.message : "Failed to load websites";
+    const errorMessage = getErrorMessage(err, "Failed to load websites");
     return NextResponse.json(
-      process.env.NODE_ENV === "development"
-        ? { error: "Failed to load websites", detail: errorMessage }
-        : { error: "Failed to load websites" },
+      { error: "Failed to load websites", detail: errorMessage },
       { status: 500 }
     );
   }
@@ -46,12 +79,9 @@ export async function POST(req: Request) {
     return NextResponse.json({ success: true, websites });
   } catch (err) {
     console.error("WEBSITES POST ERROR:", err);
-    const errorMessage =
-      err instanceof Error ? err.message : "Failed to save website";
+    const errorMessage = getErrorMessage(err, "Failed to save website");
     return NextResponse.json(
-      process.env.NODE_ENV === "development"
-        ? { error: "Failed to save website", detail: errorMessage }
-        : { error: "Failed to save website" },
+      { error: "Failed to save website", detail: errorMessage },
       { status: 500 }
     );
   }
@@ -76,8 +106,9 @@ export async function DELETE(req: Request) {
     return NextResponse.json({ success: true, websites });
   } catch (err) {
     console.error("WEBSITES DELETE ERROR:", err);
+    const errorMessage = getErrorMessage(err, "Failed to delete website");
     return NextResponse.json(
-      { error: "Failed to delete website" },
+      { error: "Failed to delete website", detail: errorMessage },
       { status: 500 }
     );
   }

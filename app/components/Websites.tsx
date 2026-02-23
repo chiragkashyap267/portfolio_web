@@ -30,7 +30,13 @@ export default function Websites() {
     async function load() {
       try {
         const res = await fetch("/api/websites", { cache: "no-store" });
-        if (!res.ok) throw new Error("Failed to load websites");
+        if (!res.ok) {
+          const errorMessage = await parseApiError(
+            res,
+            "Failed to load websites"
+          );
+          throw new Error(errorMessage);
+        }
 
         const data = await res.json();
         const normalized = Array.isArray(data) ? data.map(normalizeWebsite) : [];
@@ -275,4 +281,25 @@ function normalizeWebsite(raw: RawWebsite): Website {
     image: raw?.image ? String(raw.image).trim() : undefined,
     url: String(raw?.url || "").trim(),
   };
+}
+
+async function parseApiError(res: Response, fallback: string) {
+  try {
+    const payload = await res.json();
+    if (typeof payload?.detail === "string" && payload.detail.trim()) {
+      return payload.detail;
+    }
+    if (typeof payload?.error === "string" && payload.error.trim()) {
+      return payload.error;
+    }
+  } catch {
+    try {
+      const text = await res.text();
+      if (text.trim()) return text;
+    } catch {
+      return fallback;
+    }
+  }
+
+  return fallback;
 }
