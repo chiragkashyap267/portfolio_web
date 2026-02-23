@@ -1,110 +1,37 @@
 # Vercel Deployment Setup Guide
 
-## Issue: Projects Upload Not Working on Vercel
+## Why this was needed
 
-**Problem:** Vercel has a read-only filesystem, so you cannot write to `data/projects.json` after deployment.
+Vercel has a read-only filesystem, so writing to `data/projects.json` does not persist in production.
 
-**Solution:** Use the `PROJECTS_DATA` environment variable to persist project data.
+Projects now persist in Cloudinary as a JSON raw asset, so adding projects from the admin panel stays saved across restarts and redeploys.
 
----
+## Required environment variables
 
-## Setup Steps
+Set these in Vercel Project Settings -> Environment Variables:
 
-### 1. Prepare Your Current Projects Data
+- `CLOUDINARY_CLOUD_NAME`
+- `CLOUDINARY_API_KEY`
+- `CLOUDINARY_API_SECRET`
 
-Run this command in your terminal to get the JSON content:
+Optional:
 
-```bash
-# On Windows PowerShell
-Get-Content "data/projects.json" | Write-Output
-```
+- `PROJECTS_DATA_PUBLIC_ID` (default: `portfolio/projects-data`)
 
-This will output your current projects data.
+## How it works now
 
-### 2. Add Environment Variable to Vercel
+- Production:
+  Projects are read/written from Cloudinary JSON.
+- Local:
+  Projects are read/written from local `data/projects.json`.
 
-1. Go to your [Vercel Dashboard](https://vercel.com/dashboard)
-2. Select your project
-3. Go to **Settings → Environment Variables**
-4. Click **Add New** and create:
-   - **Name:** `PROJECTS_DATA`
-   - **Value:** Paste your entire projects JSON content (from step 1)
-   - **Environments:** Select `Production`, `Preview`, and `Development`
+## Adding projects
 
-Example format:
-```
-[{"title":"Project 1","description":"...","tech":["React","Node"],"image":"...","github":"...","live":"..."}]
-```
-
-### 3. Deploy to Vercel
-
-Push your updated code:
-```bash
-git add .
-git commit -m "Fix: projects upload for Vercel deployment"
-git push origin main
-```
-
-Your Vercel deployment will automatically rebuild and use the new code.
-
----
-
-## How It Works Now
-
-### Local Development (works as before)
-- Projects are saved to `data/projects.json`
-- Changes persist automatically
-- No additional setup needed
-
-### Vercel Production (new approach)
-- Projects load from `PROJECTS_DATA` environment variable at build time
-- New projects are cached in memory during the session
-- To persist new projects, you must manually update the `PROJECTS_DATA` environment variable
-
----
-
-## Adding New Projects on Vercel
-
-### Option 1: Manual Update (Recommended for now)
-
-1. Add projects locally and test
-2. Copy the updated `data/projects.json` content
-3. Update `PROJECTS_DATA` in Vercel environment variables
-4. Redeploy
-
-### Option 2: Use Database (Future Enhancement)
-
-Consider migrating to:
-- **Firebase Firestore** (real-time database)
-- **MongoDB Atlas** (cloud database)
-- **Supabase** (PostgreSQL alternative)
-
-This would allow adding projects directly without rebuilding.
-
----
+Use the admin panel normally. No manual env var edits are needed for each new project.
 
 ## Troubleshooting
 
-**Q: Changes not appearing on Vercel?**
-A: Make sure you updated the `PROJECTS_DATA` environment variable and redeployed.
-
-**Q: How do I see what's currently saved?**
-A: Check the Vercel environment variables in your dashboard.
-
-**Q: Can I use a different solution?**
-A: Yes! Consider the database options above for better long-term management.
-
----
-
-## What Was Changed
-
-1. **API Route** (`app/api/projects/route.ts`):
-   - Detects if running on production (Vercel)
-   - Uses `PROJECTS_DATA` env var on production
-   - Uses filesystem on local development
-
-2. **Project Cards** (`app/components/Projects.tsx`):
-   - Improved styling with better hover effects
-   - Added text wrapping for long titles
-   - Boxy design with stronger borders
-   - Better responsive layout (md: 6 instead of md: 5)
+- If projects are not updating:
+  Verify Cloudinary variables are set correctly in Vercel and redeploy once.
+- To inspect stored data:
+  Check the raw asset in Cloudinary using `PROJECTS_DATA_PUBLIC_ID`.

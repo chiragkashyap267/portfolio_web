@@ -98,7 +98,7 @@ function ProjectsAdmin() {
   useEffect(() => {
     async function load() {
       try {
-        const res = await fetch("/api/projects");
+        const res = await fetch("/api/projects", { cache: "no-store" });
         if (!res.ok) throw new Error("Failed to load projects");
         const data = await res.json();
         setProjects(Array.isArray(data) ? data : []);
@@ -127,7 +127,10 @@ function ProjectsAdmin() {
     const payload = {
       title,
       description,
-      tech: tech.split(",").map((t) => t.trim()),
+      tech: tech
+        .split(",")
+        .map((t) => t.trim())
+        .filter(Boolean),
       image,
       github: github || undefined,
       live: live || undefined,
@@ -140,12 +143,18 @@ function ProjectsAdmin() {
     });
 
     if (!res.ok) {
-      console.error(await res.text());
-      alert("Failed to save project");
+      const errorBody = await res.json().catch(() => null);
+      console.error(errorBody);
+      alert(errorBody?.detail || errorBody?.error || "Failed to save project");
       return;
     }
 
-    setProjects((prev) => [...prev, payload]);
+    const result = await res.json();
+    if (Array.isArray(result?.projects)) {
+      setProjects(result.projects);
+    } else {
+      setProjects((prev) => [...prev, payload]);
+    }
     setTitle("");
     setDescription("");
     setTech("");
@@ -155,11 +164,23 @@ function ProjectsAdmin() {
   }
 
   async function deleteProject(index: number) {
-    await fetch("/api/projects", {
+    const res = await fetch("/api/projects", {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ index }),
     });
+
+    if (!res.ok) {
+      alert("Failed to delete project");
+      return;
+    }
+
+    const result = await res.json();
+    if (Array.isArray(result?.projects)) {
+      setProjects(result.projects);
+      return;
+    }
+
     setProjects((prev) => prev.filter((_, i) => i !== index));
   }
 

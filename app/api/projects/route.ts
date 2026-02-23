@@ -1,61 +1,21 @@
 import { NextResponse } from "next/server";
-import fs from "fs";
-import path from "path";
-
-// Use environment variable for deployed version, fallback to file for local development
-const isProduction = process.env.NODE_ENV === "production";
-const filePath = path.join(
-  process.cwd(),
-  "data",
-  "projects.json"
-);
-
-// In-memory cache for production
-let cachedProjects: any[] | null = null;
-
-function readData() {
-  // For production/Vercel, use environment variable and in-memory cache
-  if (isProduction) {
-    if (!cachedProjects) {
-      const envData = process.env.PROJECTS_DATA;
-      try {
-        cachedProjects = envData ? JSON.parse(envData) : [];
-      } catch {
-        cachedProjects = [];
-      }
-    }
-    return cachedProjects;
-  }
-
-  // For local development, use filesystem
-  if (!fs.existsSync(filePath)) {
-    fs.writeFileSync(filePath, JSON.stringify([]));
-  }
-  const raw = fs.readFileSync(filePath, "utf-8");
-  return raw ? JSON.parse(raw) : [];
-}
-
-function writeData(data: any) {
-  // For production/Vercel, update in-memory cache
-  if (isProduction) {
-    cachedProjects = data;
-    console.log("Projects updated in memory. Note: Changes persist only during current session.");
-    console.log("To persist changes, update PROJECTS_DATA environment variable with:", JSON.stringify(data));
-    return;
-  }
-
-  // For local development, write to filesystem
-  fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
-}
+import { getProjects, normalizeProject, saveProjects } from "@/app/lib/projectStore";
 
 /* ================= GET ================= */
 export async function GET() {
   try {
-    const projects = readData();
+    const projects = await getProjects();
     return NextResponse.json(projects);
   } catch (err) {
     console.error("PROJECT GET ERROR:", err);
-    return NextResponse.json([], { status: 200 });
+    const errorMessage =
+      err instanceof Error ? err.message : "Failed to load projects";
+    return NextResponse.json(
+      process.env.NODE_ENV === "development"
+        ? { error: "Failed to load projects", detail: errorMessage }
+        : { error: "Failed to load projects" },
+      { status: 500 }
+    );
   }
 }
 
@@ -63,24 +23,31 @@ export async function GET() {
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    console.log("PROJECT POST BODY:", body);
+    const project = normalizeProject(body);
 
-    if (!body.title || !body.image) {
+    if (!project.title || !project.image) {
       return NextResponse.json(
         { error: "Invalid payload" },
         { status: 400 }
       );
     }
 
-    const projects = readData();
-    projects.push(body);
-    writeData(projects);
+    const projects = await getProjects();
+    projects.push({
+      ...project,
+      createdAt: new Date().toISOString(),
+    });
+    await saveProjects(projects);
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true, projects });
   } catch (err) {
     console.error("PROJECT POST ERROR:", err);
+    const errorMessage =
+      err instanceof Error ? err.message : "Failed to save project";
     return NextResponse.json(
-      { error: "Failed to save project" },
+      process.env.NODE_ENV === "development"
+        ? { error: "Failed to save project", detail: errorMessage }
+        : { error: "Failed to save project" },
       { status: 500 }
     );
   }
@@ -90,7 +57,7 @@ export async function POST(req: Request) {
 export async function DELETE(req: Request) {
   try {
     const { index } = await req.json();
-    const projects = readData();
+    const projects = await getProjects();
 
     if (index < 0 || index >= projects.length) {
       return NextResponse.json(
@@ -100,9 +67,9 @@ export async function DELETE(req: Request) {
     }
 
     projects.splice(index, 1);
-    writeData(projects);
+    await saveProjects(projects);
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true, projects });
   } catch (err) {
     console.error("PROJECT DELETE ERROR:", err);
     return NextResponse.json(
