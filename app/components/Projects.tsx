@@ -60,27 +60,33 @@ export default function Projects() {
   }, []);
 
   return (
-    <Box id="projects" py={10} px={{ xs: 2, md: 4 }}>
-      <Typography
-        variant="h4"
-        textAlign="center"
-        mb={6}
-        fontWeight={600}
-      >
-        Projects
-      </Typography>
+    <Box id="projects" py={12} px={{ xs: 2, md: 4 }}>
+      {/* Section heading */}
+      <Box textAlign="center" mb={8}>
+        <Typography
+          variant="h2"
+          fontWeight={800}
+          letterSpacing="-0.025em"
+          mb={1.5}
+          className="section-heading-gradient"
+          sx={{ fontSize: { xs: "1.8rem", md: "2.8rem" } }}
+        >
+          Projects
+        </Typography>
+        <Typography
+          sx={{ color: "rgba(255,255,255,0.4)", fontWeight: 300, fontSize: "0.95rem", letterSpacing: "0.04em", textTransform: "uppercase" }}
+        >
+          Handcrafted with passion &amp; precision
+        </Typography>
+      </Box>
 
       <Grid container spacing={3} justifyContent="center" sx={{ maxWidth: 1440, mx: "auto" }}>
         {loading && (
-          <Typography color="gray">
-            Loading projects...
-          </Typography>
+          <Typography sx={{ color: "rgba(255,255,255,0.35)", fontWeight: 300 }}>Loading projects...</Typography>
         )}
 
         {!loading && visibleProjects.length === 0 && (
-          <Typography color="gray">
-            No projects added yet.
-          </Typography>
+          <Typography sx={{ color: "rgba(255,255,255,0.35)", fontWeight: 300 }}>No projects added yet.</Typography>
         )}
 
         {visibleProjects.map((project, index) => (
@@ -100,36 +106,23 @@ function ProjectCard({ project }: { project: Project }) {
 
   return (
     <motion.div
-      whileHover={{ y: -5 }}
-      transition={{
-        type: "spring",
-        stiffness: 260,
-        damping: 22,
-      }}
+      whileHover={{ y: -6 }}
+      transition={{ type: "spring", stiffness: 280, damping: 24 }}
       style={{ height: "100%", width: "100%", maxWidth: 360, marginInline: "auto" }}
     >
       <Box
+        className="glass-card"
         sx={{
           position: "relative",
-          height: { xs: 420, sm: 440 },
+          height: { xs: 440, sm: 460 },
           width: "100%",
-          borderRadius: 3,
+          borderRadius: 4,
           overflow: "hidden",
           display: "flex",
           flexDirection: "column",
-          background:
-            "linear-gradient(145deg, rgba(20,20,20,0.96), rgba(8,8,8,0.97))",
-          border: "1px solid rgba(255, 212, 0, 0.24)",
-          transition: "all 0.28s cubic-bezier(0.4, 0, 0.2, 1)",
-          boxShadow:
-            "0 8px 24px rgba(0, 0, 0, 0.38), inset 0 1px 0 rgba(255,255,255,0.03)",
+          "&:hover img": { transform: "scale(1.05)" },
           "&:hover": {
-            boxShadow:
-              "0 14px 34px rgba(0,0,0,0.48), 0 0 0 1px rgba(255,212,0,0.4), 0 0 20px rgba(255,212,0,0.16)",
-            borderColor: "rgba(255, 212, 0, 0.54)",
-          },
-          "&:hover img": {
-            transform: "scale(1.04)",
+            boxShadow: "0 20px 56px rgba(255,107,0,0.18), 0 4px 16px rgba(0,0,0,0.5)",
           },
         }}
       >
@@ -141,10 +134,10 @@ function ProjectCard({ project }: { project: Project }) {
             loading="lazy"
             sx={{
               width: "100%",
-              height: 170,
+              height: 178,
               objectFit: "cover",
               display: "block",
-              transition: "0.3s ease",
+              transition: "transform 0.38s cubic-bezier(0.23,1,0.32,1)",
             }}
           />
         )}
@@ -152,11 +145,29 @@ function ProjectCard({ project }: { project: Project }) {
         {!project.image && (
           <Box
             sx={{
-              height: 170,
+              height: 178,
               background:
-                "radial-gradient(circle at 20% 20%, rgba(255,212,0,0.24), transparent 55%), linear-gradient(120deg, rgba(35,35,35,1), rgba(10,10,10,1))",
+                "radial-gradient(ellipse at 25% 30%, rgba(255,107,0,0.3), transparent 55%), radial-gradient(ellipse at 75% 70%, rgba(255,174,115,0.12), transparent 55%), linear-gradient(135deg, #1c1c1c, #090909)",
+              display: "grid",
+              placeItems: "center",
             }}
-          />
+          >
+            <Box
+              sx={{
+                width: 42,
+                height: 42,
+                borderRadius: "50%",
+                background: "rgba(255,107,0,0.15)",
+                border: "1px solid rgba(255,107,0,0.3)",
+                display: "grid",
+                placeItems: "center",
+                fontSize: 18,
+                color: "#FF6B00",
+              }}
+            >
+              ✦
+            </Box>
+          </Box>
         )}
 
         <Box p={2} sx={{ display: "flex", flexDirection: "column", flex: 1, gap: 1 }}>
@@ -210,21 +221,22 @@ function ProjectCard({ project }: { project: Project }) {
                 key={`${t}-${index}`}
                 label={t}
                 size="small"
-                variant="outlined"
                 sx={{
-                  borderColor: "rgba(255, 212, 0, 0.45)",
-                  color: "#FFD400",
-                  backgroundColor: "rgba(255, 212, 0, 0.08)",
+                  borderRadius: 99,
+                  border: "1px solid rgba(255, 107, 0, 0.3)",
+                  color: "rgba(255,107,0,0.9)",
+                  backgroundColor: "rgba(255, 107, 0, 0.07)",
                   maxWidth: "100%",
-                  height: 22,
+                  height: 23,
+                  fontWeight: 600,
+                  fontSize: "0.7rem",
+                  letterSpacing: "0.03em",
                   "& .MuiChip-label": {
-                    px: 0.8,
-                    fontSize: "0.72rem",
-                    lineHeight: 1.2,
-                    display: "block",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                    whiteSpace: "nowrap",
+                    px: 1,
+                  },
+                  "&:hover": {
+                    background: "rgba(255,107,0,0.15)",
+                    borderColor: "rgba(255,107,0,0.5)",
                   },
                 }}
               />
@@ -232,53 +244,53 @@ function ProjectCard({ project }: { project: Project }) {
           </Stack>
 
           <Box sx={{ mt: "auto", pt: 1, display: "flex", gap: 2 }}>
-          {project.live ? (
-            <MuiLink
-              href={project.live}
-              target="_blank"
-              rel="noopener noreferrer"
-              underline="none"
-              sx={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: 0.8,
-                color: "#fff",
-                fontSize: "0.84rem",
-                fontWeight: 600,
-                transition: "color 0.2s ease",
-                "&:hover": { color: "#FFD400" },
-              }}
-            >
-              <FaExternalLinkAlt />
-              Live
-            </MuiLink>
-          ) : null}
+            {project.live ? (
+              <MuiLink
+                href={project.live}
+                target="_blank"
+                rel="noopener noreferrer"
+                underline="none"
+                sx={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 0.8,
+                  color: "#fff",
+                  fontSize: "0.84rem",
+                  fontWeight: 600,
+                  transition: "color 0.2s ease",
+                  "&:hover": { color: "#FF6B00" },
+                }}
+              >
+                <FaExternalLinkAlt />
+                Live
+              </MuiLink>
+            ) : null}
 
-          {project.live && (
-            <Box sx={{ width: "1px", height: 18, background: "rgba(255,255,255,0.18)" }} />
-          )}
+            {project.live && (
+              <Box sx={{ width: "1px", height: 18, background: "rgba(255,255,255,0.18)" }} />
+            )}
 
-          {project.github && (
-            <MuiLink
-              href={project.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              underline="none"
-              sx={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: 0.8,
-                color: "#fff",
-                fontSize: "0.84rem",
-                fontWeight: 600,
-                transition: "color 0.2s ease",
-                "&:hover": { color: "#FFD400" },
-              }}
-            >
-              <FaGithub />
-              Code
-            </MuiLink>
-          )}
+            {project.github && (
+              <MuiLink
+                href={project.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                underline="none"
+                sx={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 0.8,
+                  color: "#fff",
+                  fontSize: "0.84rem",
+                  fontWeight: 600,
+                  transition: "color 0.2s ease",
+                  "&:hover": { color: "#FF6B00" },
+                }}
+              >
+                <FaGithub />
+                Code
+              </MuiLink>
+            )}
           </Box>
         </Box>
       </Box>

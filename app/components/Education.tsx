@@ -43,11 +43,12 @@ export default function Education() {
         textAlign="center"
         mb={8}
         fontWeight={600}
+        sx={{ fontSize: { xs: "1.8rem", md: "2.125rem" } }}
       >
         Education
       </Typography>
 
-      <Stack spacing={6} maxWidth={900} mx="auto">
+      <Stack spacing={6} maxWidth={900} mx="auto" sx={{ pl: { xs: 2, md: 0 } }}>
         {education.map((edu, index) => (
           <motion.div
             key={index}
@@ -76,31 +77,24 @@ function EducationCard({
 }) {
   return (
     <Box
+      className="glass-card"
       sx={{
         position: "relative",
-        p: 4,
+        p: { xs: 2.5, md: 4 },
         borderRadius: 4,
-        background:
-          "linear-gradient(145deg, #0f0f0f, #111)",
-        border: "1px solid #222",
-        transition: "0.3s ease",
-        "&:hover": {
-          borderColor: "#FFD400",
-          boxShadow:
-            "0 0 40px rgba(255,212,0,0.45)",
-        },
       }}
     >
       {/* YELLOW TIMELINE MARKER */}
       <Box
         sx={{
           position: "absolute",
-          left: -14,
-          top: 32,
+          left: { xs: -12, md: -14 },
+          top: { xs: 24, md: 32 },
           width: 6,
-          height: 40,
+          height: { xs: 32, md: 40 },
           borderRadius: 2,
-          background: "#FFD400",
+          background: "#FF6B00",
+          boxShadow: "0 0 10px rgba(255,107,0,0.5)",
         }}
       />
 
@@ -109,7 +103,7 @@ function EducationCard({
       </Typography>
 
       <Typography
-        color="#FFD400"
+        color="#FF6B00"
         fontWeight={500}
         mt={0.5}
       >

@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useMotionValue, useReducedMotion, useSpring } from "framer-motion";
+import { motion, useMotionValue, useReducedMotion } from "framer-motion";
 import { useEffect, useState } from "react";
 
 export default function CursorGlow() {
@@ -10,30 +10,26 @@ export default function CursorGlow() {
     return window.matchMedia("(pointer: fine) and (min-width: 1024px)").matches;
   });
 
-  const mouseX = useMotionValue(-220);
-  const mouseY = useMotionValue(-220);
-  const x = useSpring(mouseX, { stiffness: 120, damping: 24, mass: 0.4 });
-  const y = useSpring(mouseY, { stiffness: 120, damping: 24, mass: 0.4 });
+  // Direct motion values — no spring physics, no continuous RAF overhead
+  const x = useMotionValue(-220);
+  const y = useMotionValue(-220);
 
   useEffect(() => {
     const media = window.matchMedia("(pointer: fine) and (min-width: 1024px)");
     const update = (event: MediaQueryListEvent) => setEnabled(event.matches);
     media.addEventListener("change", update);
-
     return () => media.removeEventListener("change", update);
   }, []);
 
   useEffect(() => {
     if (!enabled) return;
-
     const move = (e: MouseEvent) => {
-      mouseX.set(e.clientX - 70);
-      mouseY.set(e.clientY - 70);
+      x.set(e.clientX - 70);
+      y.set(e.clientY - 70);
     };
-
     window.addEventListener("mousemove", move, { passive: true });
     return () => window.removeEventListener("mousemove", move);
-  }, [enabled, mouseX, mouseY]);
+  }, [enabled, x, y]);
 
   if (!enabled || reduceMotion) return null;
 
@@ -48,8 +44,7 @@ export default function CursorGlow() {
         borderRadius: "50%",
         pointerEvents: "none",
         zIndex: 0,
-        background:
-          "radial-gradient(circle, rgba(255,212,0,0.28), transparent 62%)",
+        background: "radial-gradient(circle, rgba(255,107,0,0.18), transparent 62%)",
         mixBlendMode: "screen",
         willChange: "transform",
       }}

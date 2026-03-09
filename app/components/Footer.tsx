@@ -24,7 +24,7 @@ export default function Footer() {
         <Typography
           fontWeight={600}
           sx={{
-            color: "#FFD400",
+            color: "#FF6B00",
             letterSpacing: 1,
           }}
         >
@@ -41,7 +41,7 @@ export default function Footer() {
               color: "white",
               transition: "0.3s",
               "&:hover": {
-                color: "#FFD400",
+                color: "#FF6B00",
                 boxShadow:
                   "0 0 12px rgba(255,212,0,0.6)",
               },
@@ -60,7 +60,7 @@ export default function Footer() {
               color: "white",
               transition: "0.3s",
               "&:hover": {
-                color: "#FFD400",
+                color: "#FF6B00",
                 boxShadow:
                   "0 0 12px rgba(255,212,0,0.6)",
               },

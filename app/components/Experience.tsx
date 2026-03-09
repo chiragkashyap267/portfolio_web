@@ -27,6 +27,15 @@ const experiences = [
     ],
   },
   {
+    role: "WordPress Developer Intern",
+    company: "Byte Depth IT Solutions Pvt. Ltd. – Gurugram (Hybrid)",
+    duration: "1 Jan 2026 – 31 Mar 2026",
+    points: [
+      "Designed and developed custom WordPress websites tailored to client requirements using themes, plugins, and page builders.",
+      "Delivered responsive, SEO-friendly websites with optimized performance and clean UI/UX design.",
+    ],
+  },
+  {
     role: "Freelance Web Developer",
     company: "Fiverr & Freelancer",
     duration: "Ongoing",
@@ -41,17 +50,26 @@ const experiences = [
 
 export default function Experience() {
   return (
-    <Box id="experience" py={10} px={{ xs: 2, md: 4 }}>
-      <Typography
-        variant="h4"
-        textAlign="center"
-        mb={8}
-        fontWeight={600}
-      >
-        Experience
-      </Typography>
+    <Box id="experience" py={12} px={{ xs: 2, md: 4 }}>
+      <Box textAlign="center" mb={8}>
+        <Typography
+          variant="h2"
+          fontWeight={800}
+          letterSpacing="-0.025em"
+          mb={1.5}
+          className="section-heading-gradient"
+          sx={{ fontSize: { xs: "1.8rem", md: "2.8rem" } }}
+        >
+          Experience
+        </Typography>
+        <Typography
+          sx={{ color: "rgba(255,255,255,0.4)", fontWeight: 300, fontSize: "0.95rem", letterSpacing: "0.04em", textTransform: "uppercase" }}
+        >
+          Where I&apos;ve built real-world impact
+        </Typography>
+      </Box>
 
-      <Stack spacing={6} maxWidth={900} mx="auto">
+      <Stack spacing={6} maxWidth={900} mx="auto" sx={{ pl: { xs: 2, md: 0 } }}>
         {experiences.map((exp, index) => (
           <motion.div
             key={index}
@@ -80,31 +98,24 @@ function ExperienceCard({
 }) {
   return (
     <Box
+      className="glass-card"
       sx={{
         position: "relative",
-        p: 4,
+        p: { xs: 2.5, md: 4 },
         borderRadius: 4,
-        background:
-          "linear-gradient(145deg, #0f0f0f, #111)",
-        border: "1px solid #222",
-        transition: "0.3s ease",
-        "&:hover": {
-          borderColor: "#FFD400",
-          boxShadow:
-            "0 0 40px rgba(255,212,0,0.45)",
-        },
       }}
     >
       {/* YELLOW TIMELINE INDICATOR */}
       <Box
         sx={{
           position: "absolute",
-          left: -14,
-          top: 32,
+          left: { xs: -12, md: -14 },
+          top: { xs: 24, md: 32 },
           width: 6,
-          height: 40,
+          height: { xs: 32, md: 40 },
           borderRadius: 2,
-          background: "#FFD400",
+          background: "#FF6B00",
+          boxShadow: "0 0 10px rgba(255,107,0,0.5)",
         }}
       />
 
@@ -113,7 +124,7 @@ function ExperienceCard({
       </Typography>
 
       <Typography
-        color="#FFD400"
+        color="#FF6B00"
         fontWeight={500}
         mt={0.5}
       >

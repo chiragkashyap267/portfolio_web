@@ -12,6 +12,11 @@ declare global {
   }
 }
 
+// Refined easing: smooth cubic ease-out that feels natural and snappy
+function smoothEase(t: number): number {
+  return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+}
+
 export default function Providers({
   children,
 }: {
@@ -24,26 +29,42 @@ export default function Providers({
     if (prefersReducedMotion) return;
 
     const lenis = new Lenis({
-      duration: 1.15,
-      easing: (t: number) => 1 - Math.pow(1 - t, 3),
+      duration: 0.9,          // snappier — less perceived lag
+      easing: smoothEase,
       smoothWheel: true,
-      wheelMultiplier: 0.95,
-      touchMultiplier: 1,
+      wheelMultiplier: 0.9,   // slightly less than native for comfort
+      touchMultiplier: 1.5,   // responsive on touch/trackpad
+      infinite: false,
     });
 
     window.__lenis = lenis;
 
-    let rafId = 0;
-    const raf = (time: number) => {
+    // Use a proper timestamp-based RAF to avoid drift and jitter
+    let rafId: number;
+    function raf(time: number) {
       lenis.raf(time);
       rafId = requestAnimationFrame(raf);
+    }
+    rafId = requestAnimationFrame(raf);
+
+    // Make anchor links (navbar) work smoothly with Lenis
+    const handleAnchorClick = (e: MouseEvent) => {
+      const target = (e.target as HTMLElement).closest("a[href^='#']");
+      if (!target) return;
+      const href = target.getAttribute("href");
+      if (!href) return;
+      const el = document.querySelector(href);
+      if (!el) return;
+      e.preventDefault();
+      lenis.scrollTo(el as HTMLElement, { offset: -80, duration: 1.4 });
     };
 
-    rafId = requestAnimationFrame(raf);
+    document.addEventListener("click", handleAnchorClick);
 
     return () => {
       cancelAnimationFrame(rafId);
       lenis.destroy();
+      document.removeEventListener("click", handleAnchorClick);
       delete window.__lenis;
     };
   }, []);

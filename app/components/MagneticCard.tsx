@@ -15,11 +15,11 @@ export default function MagneticCard({
 
   const x = useMotionValue(0);
   const y = useMotionValue(0);
-  const smoothX = useSpring(x, { stiffness: 160, damping: 22, mass: 0.6 });
-  const smoothY = useSpring(y, { stiffness: 160, damping: 22, mass: 0.6 });
+  const smoothX = useSpring(x, { stiffness: 80, damping: 18, mass: 0.4 });
+  const smoothY = useSpring(y, { stiffness: 80, damping: 18, mass: 0.4 });
 
-  const rotateX = useTransform(smoothY, [-36, 36], [2.4, -2.4]);
-  const rotateY = useTransform(smoothX, [-36, 36], [-2.4, 2.4]);
+  const rotateX = useTransform(smoothY, [-40, 40], [2, -2]);
+  const rotateY = useTransform(smoothX, [-40, 40], [-2, 2]);
 
   useEffect(() => {
     const media = window.matchMedia("(pointer: fine) and (min-width: 1024px)");

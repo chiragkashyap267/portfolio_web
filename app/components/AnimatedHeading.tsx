@@ -21,7 +21,7 @@ export default function AnimatedHeading({
         fontWeight={600}
         sx={{
           background:
-            "linear-gradient(90deg,#FFD400,#fff,#FFD400)",
+            "linear-gradient(90deg, #FF6B00, #fff, #FF6B00)",
           WebkitBackgroundClip: "text",
           WebkitTextFillColor: "transparent",
         }}

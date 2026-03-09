@@ -46,22 +46,22 @@ export default function Certificates() {
   }, []);
 
   useEffect(() => {
-  function onKey(e: KeyboardEvent) {
-    if (e.key === "Escape") {
-      setActiveImage(null);
+    function onKey(e: KeyboardEvent) {
+      if (e.key === "Escape") {
+        setActiveImage(null);
+      }
     }
-  }
 
-  if (activeImage) {
-    window.addEventListener("keydown", onKey);
-  }
+    if (activeImage) {
+      window.addEventListener("keydown", onKey);
+    }
 
-  return () => {
-    window.removeEventListener("keydown", onKey);
-  };
-}, [activeImage]);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [activeImage]);
 
-  
+
 
   return (
     <Box id="certificates" py={10} px={{ xs: 2, md: 4 }}>
@@ -70,6 +70,7 @@ export default function Certificates() {
         textAlign="center"
         mb={6}
         fontWeight={600}
+        sx={{ fontSize: { xs: "1.8rem", md: "2.125rem" } }}
       >
         Certifications & Licenses
       </Typography>
@@ -121,7 +122,7 @@ export default function Certificates() {
               maxWidth: "90%",
               maxHeight: "90%",
               borderRadius: 8,
-              border: "2px solid #FFD400",
+              border: "2px solid #FF6B00",
               background: "#000",
             }}
           />
@@ -157,8 +158,8 @@ function CertificateCard({
           transition: "0.4s ease",
           "&:hover": {
             boxShadow:
-              "0 0 40px rgba(255,212,0,0.45)",
-            borderColor: "#FFD400",
+              "0 0 40px rgba(255,107,0,0.45)",
+            borderColor: "#FF6B00",
           },
         }}
       >

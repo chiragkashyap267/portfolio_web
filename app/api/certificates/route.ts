@@ -1,103 +1,88 @@
 import { NextResponse } from "next/server";
-import fs from "fs";
-import path from "path";
+import {
+  getCertificates,
+  normalizeCertificate,
+  saveCertificates,
+} from "@/app/lib/certificatesStore";
 
-/* ================= FILE PATH ================= */
-
-const filePath = path.join(
-  process.cwd(),
-  "data",
-  "certificates.json"
-);
-
-/* ================= HELPERS ================= */
-
-function readData() {
-  if (!fs.existsSync(filePath)) {
-    fs.writeFileSync(filePath, JSON.stringify([]));
+function getErrorMessage(error: unknown, fallback: string) {
+  if (error instanceof Error && error.message) return error.message;
+  if (typeof error === "string" && error.trim()) return error;
+  if (error && typeof error === "object") {
+    const e = error as { message?: unknown; error?: { message?: unknown }; http_code?: unknown };
+    if (typeof e.message === "string" && e.message.trim()) return e.message;
+    if (e.error && typeof e.error.message === "string" && e.error.message.trim())
+      return e.error.message;
+    if (typeof e.http_code === "number") return `${fallback} (HTTP ${e.http_code})`;
   }
-  const data = fs.readFileSync(filePath, "utf-8");
-  return JSON.parse(data);
-}
-
-function writeData(data: any) {
-  fs.writeFileSync(
-    filePath,
-    JSON.stringify(data, null, 2)
-  );
+  return fallback;
 }
 
 /* ================= GET ================= */
-/* Fetch all certificates */
 
 export async function GET() {
   try {
-    const certificates = readData();
+    const certificates = await getCertificates();
     return NextResponse.json(certificates);
-  } catch (error) {
+  } catch (err) {
+    console.error("CERTIFICATES GET ERROR:", err);
+    const errorMessage = getErrorMessage(err, "Failed to load certificates");
     return NextResponse.json(
-      { error: "Failed to read certificates" },
+      { error: "Failed to load certificates", detail: errorMessage },
       { status: 500 }
     );
   }
 }
 
 /* ================= POST ================= */
-/* Add new certificate */
 
 export async function POST(req: Request) {
   try {
     const body = await req.json();
+    const cert = normalizeCertificate(body);
 
-    if (!body.title || !body.image) {
+    if (!cert.title || !cert.image) {
       return NextResponse.json(
         { error: "Title and image are required" },
         { status: 400 }
       );
     }
 
-    const certificates = readData();
+    const certificates = await getCertificates();
+    certificates.push({ ...cert, createdAt: new Date().toISOString() });
+    await saveCertificates(certificates);
 
-    certificates.push({
-      title: body.title,
-      image: body.image,
-      link: body.link || "",
-      createdAt: new Date().toISOString(),
-    });
-
-    writeData(certificates);
-
-    return NextResponse.json({ success: true });
-  } catch (error) {
+    return NextResponse.json({ success: true, certificates });
+  } catch (err) {
+    console.error("CERTIFICATES POST ERROR:", err);
+    const errorMessage = getErrorMessage(err, "Failed to save certificate");
     return NextResponse.json(
-      { error: "Failed to add certificate" },
+      { error: "Failed to save certificate", detail: errorMessage },
       { status: 500 }
     );
   }
 }
 
 /* ================= DELETE ================= */
-/* Delete certificate by index */
 
 export async function DELETE(req: Request) {
   try {
     const { index } = await req.json();
-    const certificates = readData();
+    const certificates = await getCertificates();
 
     if (index < 0 || index >= certificates.length) {
-      return NextResponse.json(
-        { error: "Invalid index" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "Invalid index" }, { status: 400 });
     }
 
     certificates.splice(index, 1);
-    writeData(certificates);
+    await saveCertificates(certificates);
 
-    return NextResponse.json({ success: true });
-  } catch (error) {
+    return NextResponse.json({ success: true, certificates });
+  } catch (err) {
+    console.error("CERTIFICATES DELETE ERROR:", err);
+    const errorMessage = getErrorMessage(err, "Delete failed");
     return NextResponse.json(
-      { error: "Failed to delete certificate" },
+      { error: "Delete failed", detail: errorMessage },
       { status: 500 }
     );
   }

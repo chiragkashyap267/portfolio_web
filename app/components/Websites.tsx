@@ -55,19 +55,53 @@ export default function Websites() {
   const visibleWebsites = useMemo(() => websites, [websites]);
 
   return (
-    <Box id="websites" py={10} px={{ xs: 2, md: 4 }}>
-      <Typography variant="h4" textAlign="center" mb={1.2} fontWeight={700}>
-        Live Websites
-      </Typography>
+    <Box id="websites" py={12} px={{ xs: 2, md: 4 }}>
+      <Box textAlign="center" mb={8}>
+        {/* Badge */}
+        <Box
+          sx={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 1,
+            px: 2.5,
+            py: 0.9,
+            borderRadius: 99,
+            background: "rgba(255,107,0,0.1)",
+            border: "1px solid rgba(255,107,0,0.28)",
+            mb: 2.5,
+          }}
+        >
+          <Box sx={{ width: 7, height: 7, borderRadius: "50%", background: "#FF6B00", boxShadow: "0 0 8px #FF6B00" }} />
+          <Typography sx={{ fontSize: "0.75rem", fontWeight: 700, color: "#FF6B00", letterSpacing: "0.06em", textTransform: "uppercase" }}>
+            20+ Live Professional Websites Built &amp; Launched
+          </Typography>
+        </Box>
 
-      <Typography
-        textAlign="center"
-        color="#aaa"
-        mb={6}
-        sx={{ maxWidth: 760, mx: "auto" }}
-      >
-        WordPress and Shopify stores I designed, built, and launched in production.
-      </Typography>
+        <Typography
+          variant="h2"
+          fontWeight={800}
+          letterSpacing="-0.025em"
+          mb={1.5}
+          className="section-heading-gradient"
+          sx={{ fontSize: { xs: "1.8rem", md: "2.8rem" } }}
+        >
+          Live Websites
+        </Typography>
+
+        <Typography
+          sx={{
+            color: "rgba(255,255,255,0.4)",
+            fontWeight: 300,
+            maxWidth: 680,
+            mx: "auto",
+            fontSize: "1rem",
+            lineHeight: 1.7,
+          }}
+        >
+          Professional WordPress sites &amp; Shopify e-commerce stores —
+          designed, built, and launched in production.
+        </Typography>
+      </Box>
 
       <Grid container spacing={4} justifyContent="center">
         {loading && <Typography color="gray">Loading websites...</Typography>}
@@ -101,54 +135,60 @@ function WebsiteCard({ website, index }: { website: Website; index: number }) {
       style={{ width: "100%", height: "100%" }}
     >
       <Box
+        className="glass-card"
         sx={{
           width: "100%",
-          minHeight: { xs: 450, md: 470 },
+          minHeight: { xs: 460, md: 480 },
           borderRadius: 4,
           overflow: "hidden",
           display: "flex",
           flexDirection: "column",
-          border: "1px solid rgba(255,212,0,0.28)",
-          background:
-            "linear-gradient(165deg, rgba(15,15,15,0.97), rgba(8,8,8,0.98))",
-          boxShadow:
-            "0 12px 34px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.04)",
-          transition: "all 0.35s ease",
+          transition: "all 0.32s cubic-bezier(0.23,1,0.32,1)",
+          "&:hover .website-image": { transform: "scale(1.06)" },
           "&:hover": {
-            borderColor: "rgba(255,212,0,0.58)",
-            boxShadow:
-              "0 20px 42px rgba(0,0,0,0.55), 0 0 28px rgba(255,212,0,0.18)",
-          },
-          "&:hover .website-image": {
-            transform: "scale(1.06)",
+            boxShadow: "0 24px 64px rgba(255,107,0,0.2), 0 4px 16px rgba(0,0,0,0.5)",
           },
         }}
       >
         {website.image ? (
-          <Box
-            className="website-image"
-            component="img"
-            src={website.image}
-            alt={website.title}
-            loading="lazy"
-            sx={{
-              width: "100%",
-              height: 220,
-              objectFit: "cover",
-              transition: "transform 0.35s ease",
-            }}
-          />
+          <Box sx={{ position: "relative", height: 230, overflow: "hidden" }}>
+            <Box
+              className="website-image"
+              component="img"
+              src={website.image}
+              alt={website.title}
+              loading="lazy"
+              sx={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                display: "block",
+                transition: "transform 0.38s cubic-bezier(0.23,1,0.32,1)",
+              }}
+            />
+            {/* Overlay gradient */}
+            <Box
+              sx={{
+                position: "absolute",
+                bottom: 0,
+                left: 0,
+                right: 0,
+                height: 80,
+                background: "linear-gradient(to top, rgba(6,6,6,0.85), transparent)",
+              }}
+            />
+          </Box>
         ) : (
           <Box
             sx={{
-              height: 220,
+              height: 230,
               background:
-                "radial-gradient(circle at 20% 20%, rgba(255,212,0,0.25), transparent 55%), linear-gradient(120deg, #1f1f1f, #090909)",
+                "radial-gradient(ellipse at 25% 30%, rgba(255,107,0,0.3), transparent 55%), radial-gradient(ellipse at 75% 70%, rgba(255,174,115,0.12), transparent 55%), linear-gradient(135deg, #1c1c1c, #090909)",
               display: "grid",
               placeItems: "center",
             }}
           >
-            <Typography sx={{ fontWeight: 700, letterSpacing: 0.5, color: "#f8f8f8" }}>
+            <Typography sx={{ fontWeight: 800, fontSize: "1.1rem", letterSpacing: "-0.01em", color: "rgba(255,255,255,0.7)" }}>
               {website.platform || "Live Site"}
             </Typography>
           </Box>
@@ -224,14 +264,14 @@ function WebsiteCard({ website, index }: { website: Website; index: number }) {
                 py: 1.15,
                 borderRadius: 99,
                 color: "#111",
-                background: "linear-gradient(135deg, #FFD400, #FFE468)",
+                background: "linear-gradient(135deg, #FF6B00, #FFAE73)",
                 fontWeight: 700,
                 letterSpacing: 0.2,
-                boxShadow: "0 8px 20px rgba(255, 212, 0, 0.28)",
+                boxShadow: "0 8px 20px rgba(255, 107, 0, 0.28)",
                 transition: "transform 0.2s ease, box-shadow 0.2s ease",
                 "&:hover": {
                   transform: "translateY(-1px)",
-                  boxShadow: "0 11px 24px rgba(255, 212, 0, 0.36)",
+                  boxShadow: "0 11px 24px rgba(255, 107, 0, 0.36)",
                 },
               }}
             >
@@ -264,9 +304,9 @@ function getPlatformStyle(platformRaw: string) {
   }
 
   return {
-    bg: "rgba(255, 212, 0, 0.16)",
-    color: "#FFD400",
-    border: "1px solid rgba(255, 212, 0, 0.45)",
+    bg: "rgba(255, 107, 0, 0.16)",
+    color: "#FF6B00",
+    border: "1px solid rgba(255, 107, 0, 0.45)",
   };
 }
 

@@ -264,9 +264,9 @@ function ProjectsAdmin() {
       ) : (
         <Stack spacing={2}>
           {projects.map((p, i) => (
-            <Box 
-              key={i} 
-              display="flex" 
+            <Box
+              key={i}
+              display="flex"
               justifyContent="space-between"
               alignItems="center"
               sx={{
@@ -284,8 +284,8 @@ function ProjectsAdmin() {
                 <Typography fontWeight={500}>{p.title}</Typography>
                 <Typography variant="caption" color="gray">{p.description?.substring(0, 60)}...</Typography>
               </Box>
-              <Button 
-                color="error" 
+              <Button
+                color="error"
                 variant="outlined"
                 size="small"
                 onClick={() => deleteProject(i)}
@@ -522,7 +522,7 @@ function CertificatesAdmin() {
   useEffect(() => {
     async function load() {
       try {
-        const res = await fetch("/api/certificates");
+        const res = await fetch("/api/certificates", { cache: "no-store" });
         if (!res.ok) throw new Error("Failed to load certificates");
         const data = await res.json();
         setCerts(Array.isArray(data) ? data : []);
@@ -557,23 +557,41 @@ function CertificatesAdmin() {
     });
 
     if (!res.ok) {
-      console.error(await res.text());
-      alert("Failed to save certificate");
+      const errorBody = await res.json().catch(() => null);
+      console.error(errorBody);
+      alert(errorBody?.detail || errorBody?.error || "Failed to save certificate");
       return;
     }
 
-    setCerts((prev) => [...prev, payload]);
+    const result = await res.json();
+    if (Array.isArray(result?.certificates)) {
+      setCerts(result.certificates);
+    } else {
+      setCerts((prev) => [...prev, payload]);
+    }
     setTitle("");
     setLink("");
     setImage("");
   }
 
   async function deleteCert(index: number) {
-    await fetch("/api/certificates", {
+    const res = await fetch("/api/certificates", {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ index }),
     });
+
+    if (!res.ok) {
+      alert("Failed to delete certificate");
+      return;
+    }
+
+    const result = await res.json();
+    if (Array.isArray(result?.certificates)) {
+      setCerts(result.certificates);
+      return;
+    }
+
     setCerts((prev) => prev.filter((_, i) => i !== index));
   }
 
@@ -620,9 +638,9 @@ function CertificatesAdmin() {
       ) : (
         <Stack spacing={2}>
           {certs.map((c, i) => (
-            <Box 
-              key={i} 
-              display="flex" 
+            <Box
+              key={i}
+              display="flex"
               justifyContent="space-between"
               alignItems="center"
               sx={{
@@ -633,12 +651,12 @@ function CertificatesAdmin() {
                 "&:hover": {
                   backgroundColor: "rgba(255, 212, 0, 0.1)",
                   borderColor: "#FFD400",
-                }
+                },
               }}
             >
               <Typography fontWeight={500}>{c.title}</Typography>
-              <Button 
-                color="error" 
+              <Button
+                color="error"
                 variant="outlined"
                 size="small"
                 onClick={() => deleteCert(i)}

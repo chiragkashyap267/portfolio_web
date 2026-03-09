@@ -4,26 +4,26 @@ const theme = createTheme({
   palette: {
     mode: "dark",
     primary: {
-      main: "#FFD400",
+      main: "#FF6B00",
     },
   },
   typography: {
-    fontFamily: "var(--font-space), system-ui, sans-serif",
+    fontFamily: "var(--font-inter), system-ui, sans-serif",
 
-    h1: { fontWeight: 700, letterSpacing: "-0.02em" },
-    h2: { fontWeight: 700, letterSpacing: "-0.02em" },
-    h3: { fontWeight: 600 },
-    h4: { fontWeight: 600 },
-    h5: { fontWeight: 600 },
-    h6: { fontWeight: 600 },
+    h1: { fontWeight: 800, letterSpacing: "-0.03em", lineHeight: 1.1 },
+    h2: { fontWeight: 800, letterSpacing: "-0.025em", lineHeight: 1.15 },
+    h3: { fontWeight: 700, letterSpacing: "-0.02em" },
+    h4: { fontWeight: 700, letterSpacing: "-0.015em" },
+    h5: { fontWeight: 600, letterSpacing: "-0.01em" },
+    h6: { fontWeight: 600, letterSpacing: "-0.005em" },
 
-    body1: { fontWeight: 400 },
-    body2: { fontWeight: 400 },
+    body1: { fontWeight: 300, lineHeight: 1.75 },
+    body2: { fontWeight: 300, lineHeight: 1.7 },
 
     button: {
-      fontWeight: 600,
+      fontWeight: 700,
       textTransform: "none",
-      letterSpacing: "0.04em",
+      letterSpacing: "0.02em",
     },
   },
 });

@@ -98,15 +98,24 @@ const skills = [
 
 export default function Skills() {
   return (
-    <Box id="skills" py={10} px={{ xs: 2, md: 4 }}>
-      <Typography
-        variant="h4"
-        textAlign="center"
-        mb={6}
-        fontWeight={600}
-      >
-        Skills
-      </Typography>
+    <Box id="skills" py={12} px={{ xs: 2, md: 4 }}>
+      <Box textAlign="center" mb={8}>
+        <Typography
+          variant="h2"
+          fontWeight={800}
+          letterSpacing="-0.025em"
+          mb={1.5}
+          className="section-heading-gradient"
+          sx={{ fontSize: { xs: "1.8rem", md: "2.8rem" } }}
+        >
+          Skills
+        </Typography>
+        <Typography
+          sx={{ color: "rgba(255,255,255,0.4)", fontWeight: 300, fontSize: "0.95rem", letterSpacing: "0.04em", textTransform: "uppercase" }}
+        >
+          Technologies I work with
+        </Typography>
+      </Box>
 
       <Grid container spacing={3} justifyContent="center">
         {skills.map((skill) => (
@@ -120,40 +129,46 @@ export default function Skills() {
               }}
             >
               <Box
+                className="glass-card"
                 sx={{
-                  p: 3,
+                  p: { xs: 2, md: 3 },
                   textAlign: "center",
                   borderRadius: 3,
-                  background:
-                    "linear-gradient(145deg,#0f0f0f,#111)",
-                  border: "1px solid #222",
-                  color: "#FFD400",
-                  minHeight: 130,
+                  color: "#FF6B00",
+                  minHeight: { xs: 110, md: 140 },
                   display: "flex",
                   flexDirection: "column",
                   alignItems: "center",
                   justifyContent: "center",
-                  gap: 1,
+                  gap: 1.5,
+                  transition: "all 0.28s ease",
                   "&:hover": {
-                    boxShadow:
-                      "0 0 30px rgba(255,212,0,0.45)",
+                    boxShadow: "0 0 32px rgba(255,107,0,0.22), 0 8px 24px rgba(0,0,0,0.4)",
+                    borderColor: "rgba(255,107,0,0.35) !important",
+                    transform: "translateY(-4px)",
                   },
                 }}
               >
                 <Box
                   sx={{
-                    fontSize: 34,
+                    fontSize: { xs: 34, md: 42 },
                     display: "flex",
-                    gap: 1,
+                    gap: 1.2,
+                    filter: "drop-shadow(0 0 8px rgba(255,107,0,0.4))",
                   }}
                 >
                   {skill.icon}
                 </Box>
 
                 <Typography
-                  fontSize={14}
-                  fontWeight={500}
-                  textAlign="center"
+                  sx={{
+                    fontSize: "0.82rem",
+                    fontWeight: 600,
+                    letterSpacing: "0.02em",
+                    color: "rgba(255,255,255,0.85)",
+                    textAlign: "center",
+                    lineHeight: 1.4,
+                  }}
                 >
                   {skill.name}
                 </Typography>
