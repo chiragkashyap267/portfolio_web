@@ -85,14 +85,17 @@ async function readFromCloudinary(): Promise<Certificate[]> {
         const response = await fetch(`${resourceUrl}?t=${Date.now()}`, {
             cache: "no-store",
         });
+
+        // If the JSON file hasn't been uploaded to Cloudinary yet, just return empty
         if (!response.ok) return [];
 
         const data = await response.json();
         return Array.isArray(data)
             ? data.map((item) => normalizeCertificate(item as RawCertificate))
             : [];
-    } catch (error: unknown) {
-        throw error;
+    } catch {
+        // Network error or JSON parse error — don't crash the route
+        return [];
     }
 }
 

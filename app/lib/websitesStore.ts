@@ -97,8 +97,8 @@ async function readFromCloudinary(): Promise<Website[]> {
     return Array.isArray(data)
       ? data.map((item) => normalizeWebsite(item as RawWebsite))
       : [];
-  } catch (error: unknown) {
-    throw error;
+  } catch {
+    return [];
   }
 }
 
