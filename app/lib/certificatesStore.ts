@@ -26,13 +26,37 @@ const cloudinaryReady =
 const isProduction = process.env.NODE_ENV === "production";
 const useCloudinaryStore = isProduction && cloudinaryReady;
 
-if (useCloudinaryStore) {
+if (cloudinaryReady) {
     cloudinary.config({
         cloud_name: process.env.CLOUDINARY_CLOUD_NAME!,
         api_key: process.env.CLOUDINARY_API_KEY!,
         api_secret: process.env.CLOUDINARY_API_SECRET!,
     });
 }
+
+/* ================= SEED DATA ================= */
+// This is the initial dataset. When Cloudinary has no file yet, we auto-seed
+// and save. After that, all adds/deletes via admin persist to Cloudinary.
+const SEED_CERTIFICATES: Certificate[] = [
+    {
+        title: "Frontend Web dev Intern @Prodesk IT",
+        image: "https://res.cloudinary.com/ds6xwzglf/image/upload/v1767031630/portfolio/kzlrqie98n12fcodurt2.jpg",
+        link: "https://www.linkedin.com/feed/update/urn:li:activity:7355992814448431104/",
+        createdAt: "2025-12-29T18:07:09.436Z",
+    },
+    {
+        title: "Digital Marketing Trivia by VIJESHA IT SERVICES LLP",
+        image: "https://res.cloudinary.com/ds6xwzglf/image/upload/v1767031726/portfolio/v0cep2fn7emufar4zd2v.jpg",
+        link: "https://www.linkedin.com/feed/update/urn:li:activity:7390418638333190144/",
+        createdAt: "2025-12-29T18:08:51.845Z",
+    },
+    {
+        title: "5-Day AI Agents Intensive Course with Google",
+        image: "https://res.cloudinary.com/ds6xwzglf/image/upload/v1767031805/portfolio/lyrhvirnjvfhgt0vid72.png",
+        link: "https://www.kaggle.com/certification/badges/chirag267/105",
+        createdAt: "2025-12-29T18:10:05.814Z",
+    },
+];
 
 /* ================= NORMALIZE ================= */
 
@@ -49,8 +73,9 @@ export function normalizeCertificate(raw: RawCertificate): Certificate {
 
 function readLocalFile(): Certificate[] {
     if (!fs.existsSync(localFilePath)) {
-        if (isProduction) return [];
-        fs.writeFileSync(localFilePath, JSON.stringify([], null, 2));
+        if (isProduction) return SEED_CERTIFICATES;
+        fs.writeFileSync(localFilePath, JSON.stringify(SEED_CERTIFICATES, null, 2));
+        return SEED_CERTIFICATES;
     }
     try {
         const raw = fs.readFileSync(localFilePath, "utf-8");
@@ -80,22 +105,26 @@ async function getCloudinaryResourceUrl(): Promise<string | null> {
 async function readFromCloudinary(): Promise<Certificate[]> {
     try {
         const resourceUrl = await getCloudinaryResourceUrl();
-        if (!resourceUrl) return [];
+        if (!resourceUrl) return SEED_CERTIFICATES;
 
         const response = await fetch(`${resourceUrl}?t=${Date.now()}`, {
             cache: "no-store",
         });
 
-        // If the JSON file hasn't been uploaded to Cloudinary yet, just return empty
-        if (!response.ok) return [];
+        // File doesn't exist on Cloudinary yet — auto-seed it now
+        if (!response.ok) {
+            console.log("[certificates] Cloudinary file missing — auto-seeding...");
+            await writeToCloudinary(SEED_CERTIFICATES);
+            return SEED_CERTIFICATES;
+        }
 
         const data = await response.json();
         return Array.isArray(data)
             ? data.map((item) => normalizeCertificate(item as RawCertificate))
             : [];
-    } catch {
-        // Network error or JSON parse error — don't crash the route
-        return [];
+    } catch (err) {
+        console.error("[certificates] readFromCloudinary error:", err);
+        return SEED_CERTIFICATES;
     }
 }
 
