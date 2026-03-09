@@ -201,6 +201,20 @@ function ProjectsAdmin() {
     setProjects((prev) => prev.filter((_, i) => i !== index));
   }
 
+  async function moveProject(from: number, dir: -1 | 1) {
+    const to = from + dir;
+    if (to < 0 || to >= projects.length) return;
+    const updated = [...projects];
+    [updated[from], updated[to]] = [updated[to], updated[from]];
+    setProjects(updated);
+    const res = await fetch("/api/projects", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ items: updated }),
+    });
+    if (!res.ok) alert("Failed to save new order");
+  }
+
   return (
     <Stack spacing={3}>
       <Typography fontWeight={600}>Add Project</Typography>
@@ -267,7 +281,6 @@ function ProjectsAdmin() {
             <Box
               key={i}
               display="flex"
-              justifyContent="space-between"
               alignItems="center"
               sx={{
                 p: 2,
@@ -280,6 +293,12 @@ function ProjectsAdmin() {
                 }
               }}
             >
+              {/* Rank + arrows */}
+              <Box display="flex" flexDirection="column" alignItems="center" mr={1.5} minWidth={36}>
+                <Typography variant="caption" color="#FF6B00" fontWeight={800} lineHeight={1}>{i + 1}</Typography>
+                <Button size="small" sx={{ minWidth: 24, px: 0, py: 0.2, fontSize: 12 }} onClick={() => moveProject(i, -1)} disabled={i === 0}>▲</Button>
+                <Button size="small" sx={{ minWidth: 24, px: 0, py: 0.2, fontSize: 12 }} onClick={() => moveProject(i, 1)} disabled={i === projects.length - 1}>▼</Button>
+              </Box>
               <Box flex={1}>
                 <Typography fontWeight={500}>{p.title}</Typography>
                 <Typography variant="caption" color="gray">{p.description?.substring(0, 60)}...</Typography>
@@ -405,6 +424,20 @@ function WebsitesAdmin() {
     setWebsites((prev) => prev.filter((_, i) => i !== index));
   }
 
+  async function moveWebsite(from: number, dir: -1 | 1) {
+    const to = from + dir;
+    if (to < 0 || to >= websites.length) return;
+    const updated = [...websites];
+    [updated[from], updated[to]] = [updated[to], updated[from]];
+    setWebsites(updated);
+    const res = await fetch("/api/websites", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ items: updated }),
+    });
+    if (!res.ok) alert("Failed to save new order");
+  }
+
   return (
     <Stack spacing={3}>
       <Typography fontWeight={600}>Add Live Website</Typography>
@@ -470,7 +503,6 @@ function WebsitesAdmin() {
             <Box
               key={i}
               display="flex"
-              justifyContent="space-between"
               alignItems="center"
               sx={{
                 p: 2,
@@ -483,6 +515,12 @@ function WebsitesAdmin() {
                 },
               }}
             >
+              {/* Rank + arrows */}
+              <Box display="flex" flexDirection="column" alignItems="center" mr={1.5} minWidth={36}>
+                <Typography variant="caption" color="#FF6B00" fontWeight={800} lineHeight={1}>{i + 1}</Typography>
+                <Button size="small" sx={{ minWidth: 24, px: 0, py: 0.2, fontSize: 12 }} onClick={() => moveWebsite(i, -1)} disabled={i === 0}>▲</Button>
+                <Button size="small" sx={{ minWidth: 24, px: 0, py: 0.2, fontSize: 12 }} onClick={() => moveWebsite(i, 1)} disabled={i === websites.length - 1}>▼</Button>
+              </Box>
               <Box flex={1}>
                 <Typography fontWeight={500}>
                   {w.title}{" "}
@@ -595,6 +633,20 @@ function CertificatesAdmin() {
     setCerts((prev) => prev.filter((_, i) => i !== index));
   }
 
+  async function moveCert(from: number, dir: -1 | 1) {
+    const to = from + dir;
+    if (to < 0 || to >= certs.length) return;
+    const updated = [...certs];
+    [updated[from], updated[to]] = [updated[to], updated[from]];
+    setCerts(updated);
+    const res = await fetch("/api/certificates", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ items: updated }),
+    });
+    if (!res.ok) alert("Failed to save new order");
+  }
+
   return (
     <Stack spacing={3}>
       <Typography fontWeight={600}>Add Certificate</Typography>
@@ -641,7 +693,6 @@ function CertificatesAdmin() {
             <Box
               key={i}
               display="flex"
-              justifyContent="space-between"
               alignItems="center"
               sx={{
                 p: 2,
@@ -654,7 +705,13 @@ function CertificatesAdmin() {
                 },
               }}
             >
-              <Typography fontWeight={500}>{c.title}</Typography>
+              {/* Rank + arrows */}
+              <Box display="flex" flexDirection="column" alignItems="center" mr={1.5} minWidth={36}>
+                <Typography variant="caption" color="#FF6B00" fontWeight={800} lineHeight={1}>{i + 1}</Typography>
+                <Button size="small" sx={{ minWidth: 24, px: 0, py: 0.2, fontSize: 12 }} onClick={() => moveCert(i, -1)} disabled={i === 0}>▲</Button>
+                <Button size="small" sx={{ minWidth: 24, px: 0, py: 0.2, fontSize: 12 }} onClick={() => moveCert(i, 1)} disabled={i === certs.length - 1}>▼</Button>
+              </Box>
+              <Typography fontWeight={500} flex={1}>{c.title}</Typography>
               <Button
                 color="error"
                 variant="outlined"

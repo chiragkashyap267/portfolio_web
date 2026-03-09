@@ -56,6 +56,26 @@ export async function GET() {
   }
 }
 
+/* ================= PATCH — reorder ================= */
+export async function PATCH(req: Request) {
+  try {
+    const body = await req.json();
+    if (!Array.isArray(body?.items)) {
+      return NextResponse.json({ error: "items array required" }, { status: 400 });
+    }
+    const reordered = body.items.map(normalizeWebsite);
+    await saveWebsites(reordered);
+    return NextResponse.json({ success: true, websites: reordered });
+  } catch (err) {
+    console.error("WEBSITES PATCH ERROR:", err);
+    const errorMessage = getErrorMessage(err, "Failed to reorder websites");
+    return NextResponse.json(
+      { error: "Failed to reorder websites", detail: errorMessage },
+      { status: 500 }
+    );
+  }
+}
+
 /* ================= POST ================= */
 export async function POST(req: Request) {
   try {
