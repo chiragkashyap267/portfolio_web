@@ -89,7 +89,7 @@ export default function Navbar() {
             : "rgba(5, 5, 5, 0.55)",
           backdropFilter: "blur(20px) saturate(140%)",
           WebkitBackdropFilter: "blur(20px) saturate(140%)",
-          borderBottom: "1px solid rgba(255, 107, 0, 0.13)",
+          borderBottom: "1px solid rgba(0,200,150,0.13)",
           boxShadow: scrolled
             ? "0 8px 32px rgba(0,0,0,0.5), 0 1px 0 rgba(255,107,0,0.08) inset"
             : "none",
@@ -105,7 +105,7 @@ export default function Navbar() {
             fontSize: { xs: 18, md: 21 },
             letterSpacing: "-0.02em",
             cursor: "pointer",
-            background: "linear-gradient(135deg, #FF6B00 0%, #FFAE73 60%, #FF6B00 100%)",
+            background: "linear-gradient(135deg, #00C896 0%, #00E5B0 60%, #00C896 100%)",
             backgroundSize: "200% auto",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
@@ -131,7 +131,7 @@ export default function Navbar() {
               key={link.id}
               onClick={() => scrollTo(link.id)}
               sx={{
-                color: active === link.id ? "#FF6B00" : "rgba(255,255,255,0.72)",
+                color: active === link.id ? "#00C896" : "rgba(255,255,255,0.72)",
                 fontWeight: active === link.id ? 700 : 400,
                 fontSize: "0.82rem",
                 letterSpacing: "0.02em",
@@ -142,8 +142,8 @@ export default function Navbar() {
                 position: "relative",
                 transition: "color 0.2s ease, background 0.2s ease",
                 "&:hover": {
-                  color: "#FF6B00",
-                  background: "rgba(255, 107, 0, 0.08)",
+                  color: "#00C896",
+                  background: "rgba(0,200,150,0.08)",
                 },
                 "&::after": {
                   content: '""',
@@ -153,7 +153,7 @@ export default function Navbar() {
                   transform: active === link.id ? "translateX(-50%) scaleX(1)" : "translateX(-50%) scaleX(0)",
                   width: "60%",
                   height: "1.5px",
-                  background: "#FF6B00",
+                  background: "#00C896",
                   borderRadius: 99,
                   transition: "transform 0.25s ease",
                 },
@@ -172,8 +172,8 @@ export default function Navbar() {
             variant="outlined"
             sx={{
               ml: 1.5,
-              borderColor: "rgba(255,107,0,0.6)",
-              color: "#FF6B00",
+              borderColor: "rgba(0,200,150,0.6)",
+              color: "#00C896",
               fontWeight: 700,
               fontSize: "0.82rem",
               letterSpacing: "0.04em",
@@ -181,9 +181,9 @@ export default function Navbar() {
               py: 0.8,
               borderRadius: 99,
               "&:hover": {
-                background: "rgba(255,107,0,0.12)",
-                borderColor: "#FF6B00",
-                boxShadow: "0 0 20px rgba(255,107,0,0.18)",
+                background: "rgba(0,200,150,0.12)",
+                borderColor: "#00C896",
+                boxShadow: "0 0 20px rgba(0,200,150,0.18)",
               },
             }}
           >
@@ -211,8 +211,8 @@ export default function Navbar() {
           onClick={() => setOpen(true)}
           sx={{
             display: { xs: "flex", md: "none" },
-            color: "#FF6B00",
-            border: "1px solid rgba(255,107,0,0.3)",
+            color: "#00C896",
+            border: "1px solid rgba(0,200,150,0.3)",
             borderRadius: 2,
             p: 0.6,
           }}
@@ -230,7 +230,7 @@ export default function Navbar() {
           sx: {
             background: "rgba(6, 6, 6, 0.96)",
             backdropFilter: "blur(40px)",
-            borderLeft: "1px solid rgba(255,107,0,0.15)",
+            borderLeft: "1px solid rgba(0,200,150,0.15)",
             width: 272,
           },
         }}
@@ -241,7 +241,7 @@ export default function Navbar() {
               sx={{
                 fontWeight: 800,
                 fontSize: 18,
-                background: "linear-gradient(135deg, #FF6B00, #FFAE73)",
+                background: "linear-gradient(135deg, #00C896, #00E5B0)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
@@ -261,14 +261,14 @@ export default function Navbar() {
                 onClick={() => scrollTo(link.id)}
                 sx={{
                   justifyContent: "flex-start",
-                  color: active === link.id ? "#FF6B00" : "rgba(255,255,255,0.75)",
+                  color: active === link.id ? "#00C896" : "rgba(255,255,255,0.75)",
                   fontWeight: active === link.id ? 700 : 400,
                   fontSize: "0.95rem",
                   px: 2,
                   py: 1,
                   borderRadius: 2,
                   background: active === link.id ? "rgba(255,107,0,0.08)" : "transparent",
-                  "&:hover": { color: "#FF6B00", background: "rgba(255,107,0,0.06)" },
+                  "&:hover": { color: "#00C896", background: "rgba(0,200,150,0.06)" },
                 }}
               >
                 {link.label}
@@ -281,7 +281,7 @@ export default function Navbar() {
                 variant="contained"
                 fullWidth
                 sx={{
-                  background: "linear-gradient(90deg, #FF6B00, #FFAE73)",
+                  background: "linear-gradient(90deg, #00C896, #00E5B0)",
                   color: "#111",
                   fontWeight: 800,
                   borderRadius: 99,

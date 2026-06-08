@@ -93,8 +93,8 @@ function EducationCard({
           width: 6,
           height: { xs: 32, md: 40 },
           borderRadius: 2,
-          background: "#FF6B00",
-          boxShadow: "0 0 10px rgba(255,107,0,0.5)",
+          background: "#00C896",
+          boxShadow: "0 0 10px rgba(0,200,150,0.5)",
         }}
       />
 
@@ -103,7 +103,7 @@ function EducationCard({
       </Typography>
 
       <Typography
-        color="#FF6B00"
+        color="#00C896"
         fontWeight={500}
         mt={0.5}
       >

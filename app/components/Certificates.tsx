@@ -122,7 +122,7 @@ export default function Certificates() {
               maxWidth: "90%",
               maxHeight: "90%",
               borderRadius: 8,
-              border: "2px solid #FF6B00",
+              border: "2px solid #00C896",
               background: "#000",
             }}
           />
@@ -158,8 +158,8 @@ function CertificateCard({
           transition: "0.4s ease",
           "&:hover": {
             boxShadow:
-              "0 0 40px rgba(255,107,0,0.45)",
-            borderColor: "#FF6B00",
+              "0 0 40px rgba(0,200,150,0.4)",
+            borderColor: "#00C896",
           },
         }}
       >

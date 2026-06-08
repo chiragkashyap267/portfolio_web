@@ -122,7 +122,7 @@ function ProjectCard({ project }: { project: Project }) {
           flexDirection: "column",
           "&:hover img": { transform: "scale(1.05)" },
           "&:hover": {
-            boxShadow: "0 20px 56px rgba(255,107,0,0.18), 0 4px 16px rgba(0,0,0,0.5)",
+            boxShadow: "0 20px 56px rgba(0,200,150,0.18), 0 4px 16px rgba(0,0,0,0.5)",
           },
         }}
       >
@@ -147,7 +147,7 @@ function ProjectCard({ project }: { project: Project }) {
             sx={{
               height: 178,
               background:
-                "radial-gradient(ellipse at 25% 30%, rgba(255,107,0,0.3), transparent 55%), radial-gradient(ellipse at 75% 70%, rgba(255,174,115,0.12), transparent 55%), linear-gradient(135deg, #1c1c1c, #090909)",
+                "radial-gradient(ellipse at 25% 30%, rgba(0,200,150,0.3), transparent 55%), radial-gradient(ellipse at 75% 70%, rgba(255,174,115,0.12), transparent 55%), linear-gradient(135deg, #1c1c1c, #090909)",
               display: "grid",
               placeItems: "center",
             }}
@@ -157,12 +157,12 @@ function ProjectCard({ project }: { project: Project }) {
                 width: 42,
                 height: 42,
                 borderRadius: "50%",
-                background: "rgba(255,107,0,0.15)",
-                border: "1px solid rgba(255,107,0,0.3)",
+                background: "rgba(0,200,150,0.15)",
+                border: "1px solid rgba(0,200,150,0.12)",
                 display: "grid",
                 placeItems: "center",
                 fontSize: 18,
-                color: "#FF6B00",
+                color: "#00C896",
               }}
             >
               ✦
@@ -223,9 +223,9 @@ function ProjectCard({ project }: { project: Project }) {
                 size="small"
                 sx={{
                   borderRadius: 99,
-                  border: "1px solid rgba(255, 107, 0, 0.3)",
-                  color: "rgba(255,107,0,0.9)",
-                  backgroundColor: "rgba(255, 107, 0, 0.07)",
+                  border: "1px solid rgba(0,200,150,0.3)",
+                  color: "rgba(0,200,150,0.9)",
+                  backgroundColor: "rgba(0,200,150,0.07)",
                   maxWidth: "100%",
                   height: 23,
                   fontWeight: 600,
@@ -235,8 +235,8 @@ function ProjectCard({ project }: { project: Project }) {
                     px: 1,
                   },
                   "&:hover": {
-                    background: "rgba(255,107,0,0.15)",
-                    borderColor: "rgba(255,107,0,0.5)",
+                    background: "rgba(0,200,150,0.15)",
+                    borderColor: "rgba(0,200,150,0.5)",
                   },
                 }}
               />
@@ -258,7 +258,7 @@ function ProjectCard({ project }: { project: Project }) {
                   fontSize: "0.84rem",
                   fontWeight: 600,
                   transition: "color 0.2s ease",
-                  "&:hover": { color: "#FF6B00" },
+                  "&:hover": { color: "#00C896" },
                 }}
               >
                 <FaExternalLinkAlt />
@@ -284,7 +284,7 @@ function ProjectCard({ project }: { project: Project }) {
                   fontSize: "0.84rem",
                   fontWeight: 600,
                   transition: "color 0.2s ease",
-                  "&:hover": { color: "#FF6B00" },
+                  "&:hover": { color: "#00C896" },
                 }}
               >
                 <FaGithub />

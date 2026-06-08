@@ -53,9 +53,8 @@ function Typewriter() {
       exit={{ opacity: 0, y: -8 }}
       transition={{ duration: 0.3 }}
       style={{
-        color: "#FF6B00",
+        color: "#00C896",
         fontWeight: 700,
-        // no textShadow — causes repaint on every animation frame
       }}
     >
       {skills[index]}
@@ -78,8 +77,8 @@ function StatPill({ value, label }: { value: string; label: string }) {
         px: { xs: 0.5, sm: 1.5, md: 3 },
         py: { xs: 0.8, md: 1.5 },
         borderRadius: { xs: 2.5, md: 3 },
-        background: "rgba(255,107,0,0.07)",
-        border: "1px solid rgba(255,107,0,0.15)",
+        background: "rgba(0,200,150,0.07)",
+        border: "1px solid rgba(0,200,150,0.15)",
         backdropFilter: "blur(8px)",
       }}
     >
@@ -90,7 +89,7 @@ function StatPill({ value, label }: { value: string; label: string }) {
           letterSpacing: "-0.02em",
           lineHeight: 1,
           whiteSpace: "nowrap",
-          background: "linear-gradient(135deg, #FF6B00, #FFAE73)",
+          background: "linear-gradient(135deg, #00C896, #00E5B0)",
           WebkitBackgroundClip: "text",
           WebkitTextFillColor: "transparent",
           backgroundClip: "text",
@@ -156,9 +155,9 @@ export default function Hero() {
                 label="Full Stack Developer & Web Specialist"
                 size="small"
                 sx={{
-                  background: "rgba(255,107,0,0.1)",
-                  border: "1px solid rgba(255,107,0,0.3)",
-                  color: "#FF6B00",
+                  background: "rgba(0,200,150,0.1)",
+                  border: "1px solid rgba(0,200,150,0.3)",
+                  color: "#00C896",
                   fontWeight: 600,
                   fontSize: "0.75rem",
                   letterSpacing: "0.04em",
@@ -187,7 +186,7 @@ export default function Hero() {
                 <span
                   style={{
                     background:
-                      "linear-gradient(90deg, #FF6B00 0%, #FFAE73 50%, #FF6B00 100%)",
+                      "linear-gradient(90deg, #00C896 0%, #00E5B0 50%, #00C896 100%)",
                     backgroundSize: "200% auto",
                     backgroundClip: "text",
                     display: "inline-block",
@@ -222,7 +221,7 @@ export default function Hero() {
                   custom React / Next.js apps
                 </span>{" "}
                 to{" "}
-                <span style={{ color: "#FF6B00", fontWeight: 600 }}>
+                <span style={{ color: "#00C896", fontWeight: 600 }}>
                   <Typewriter />
                 </span>.
               </Typography>
@@ -259,15 +258,15 @@ export default function Hero() {
                     fontSize: "0.95rem",
                     fontWeight: 800,
                     letterSpacing: "0.02em",
-                    background: "linear-gradient(135deg, #FF6B00 0%, #FF8C00 50%, #FFAE73 100%)",
+                    background: "linear-gradient(135deg, #00C896 0%, #00D9A8 50%, #00E5B0 100%)",
                     backgroundSize: "200% auto",
-                    color: "#0d0d0d",
+                    color: "#040a08",
                     borderRadius: 99,
-                    boxShadow: "0 8px 28px rgba(255,107,0,0.35)",
+                    boxShadow: "0 8px 28px rgba(0,200,150,0.35)",
                     transition: "all 0.3s ease",
                     "&:hover": {
                       backgroundPosition: "right center",
-                      boxShadow: "0 12px 40px rgba(255,107,0,0.5)",
+                      boxShadow: "0 12px 40px rgba(0,200,150,0.5)",
                       transform: "translateY(-2px)",
                     },
                   }}
@@ -286,15 +285,15 @@ export default function Hero() {
                     fontSize: "0.95rem",
                     fontWeight: 700,
                     letterSpacing: "0.02em",
-                    borderColor: "rgba(255,107,0,0.45)",
-                    color: "#FF6B00",
+                    borderColor: "rgba(0,200,150,0.45)",
+                    color: "#00C896",
                     borderRadius: 99,
                     backdropFilter: "blur(8px)",
                     transition: "all 0.3s ease",
                     "&:hover": {
-                      background: "rgba(255,107,0,0.1)",
-                      borderColor: "#FF6B00",
-                      boxShadow: "0 0 24px rgba(255,107,0,0.2)",
+                      background: "rgba(0,200,150,0.1)",
+                      borderColor: "#00C896",
+                      boxShadow: "0 0 24px rgba(0,200,150,0.2)",
                       transform: "translateY(-2px)",
                     },
                   }}
@@ -339,10 +338,10 @@ export default function Hero() {
 /* ================= IMAGE COMPONENT ================= */
 
 const TECH_BADGES = [
-  { label: "React", icon: <FaReact color="#FF6B00" />, angle: 45 },
-  { label: "Next.js", icon: <SiNextdotjs color="#FF6B00" />, angle: 135 },
-  { label: "Node.js", icon: <FaNodeJs color="#FF6B00" />, angle: 225 },
-  { label: "WordPress", icon: <FaWordpress color="#FF6B00" />, angle: 315 },
+  { label: "React", icon: <FaReact color="#00C896" />, angle: 45 },
+  { label: "Next.js", icon: <SiNextdotjs color="#00C896" />, angle: 135 },
+  { label: "Node.js", icon: <FaNodeJs color="#00C896" />, angle: 225 },
+  { label: "WordPress", icon: <FaWordpress color="#00C896" />, angle: 315 },
 ];
 
 function HeroImage() {
@@ -395,7 +394,7 @@ function HeroImage() {
         width: { xs: ORBIT_2.xs, sm: ORBIT_2.sm, md: ORBIT_2.md, lg: ORBIT_2.lg },
         height: { xs: ORBIT_2.xs, sm: ORBIT_2.sm, md: ORBIT_2.md, lg: ORBIT_2.lg },
         borderRadius: "50%",
-        background: "radial-gradient(circle, rgba(255,107,0,0.18) 0%, rgba(255,107,0,0.05) 45%, transparent 70%)",
+        background: "radial-gradient(circle, rgba(0,200,150,0.18) 0%, rgba(0,200,150,0.05) 45%, transparent 70%)",
         filter: "blur(24px)",
         pointerEvents: "none",
         zIndex: 0,
@@ -410,7 +409,7 @@ function HeroImage() {
           width: { xs: ORBIT_2.xs, sm: ORBIT_2.sm, md: ORBIT_2.md, lg: ORBIT_2.lg },
           height: { xs: ORBIT_2.xs, sm: ORBIT_2.sm, md: ORBIT_2.md, lg: ORBIT_2.lg },
           borderRadius: "50%",
-          border: "1px dashed rgba(255,107,0,0.12)",
+          border: "1px dashed rgba(0,200,150,0.12)",
           zIndex: 1,
         }}
       />
@@ -449,7 +448,7 @@ function HeroImage() {
                   justifyContent: "center",
                   gap: 0.5,
                   background: "rgba(10,10,10,0.88)",
-                  border: "1px solid rgba(255,107,0,0.28)",
+                  border: "1px solid rgba(0,200,150,0.28)",
                   borderRadius: 99,
                   padding: "2px 8px",
                   fontSize: { xs: 10, md: 11 },
@@ -476,7 +475,7 @@ function HeroImage() {
           width: { xs: SIZE.xs + 6, sm: SIZE.sm + 6, md: SIZE.md + 6, lg: SIZE.lg + 6 },
           height: { xs: SIZE.xs + 6, sm: SIZE.sm + 6, md: SIZE.md + 6, lg: SIZE.lg + 6 },
           borderRadius: 34,
-          background: "conic-gradient(from 0deg, #FF6B00, #FFAE73, transparent, transparent, #FF6B00)",
+          background: "conic-gradient(from 0deg, #00C896, #00E5B0, transparent, transparent, #00C896)",
           zIndex: 3,
           filter: "blur(1px)",
         }}
@@ -505,7 +504,7 @@ function HeroImage() {
           {/* Inner glow on the card */}
           <Box sx={{
             position: "absolute", inset: 0, borderRadius: "28px", zIndex: 1, pointerEvents: "none",
-            background: "linear-gradient(135deg, rgba(255,107,0,0.12) 0%, transparent 60%, rgba(255,107,0,0.05) 100%)",
+            background: "linear-gradient(135deg, rgba(0,200,150,0.12) 0%, transparent 60%, rgba(0,200,150,0.05) 100%)",
           }} />
 
           <Box
@@ -514,7 +513,7 @@ function HeroImage() {
               height: { xs: SIZE.xs, sm: SIZE.sm, md: SIZE.md, lg: SIZE.lg },
               borderRadius: "28px",
               overflow: "hidden",
-              boxShadow: "0 40px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,107,0,0.18), inset 0 1px 0 rgba(255,255,255,0.08)",
+              boxShadow: "0 40px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(0,200,150,0.18), inset 0 1px 0 rgba(255,255,255,0.08)",
               position: "relative",
             }}
           >
@@ -546,7 +545,7 @@ function HeroImage() {
         alignItems: "center",
         gap: 1,
         background: "rgba(10,10,10,0.92)",
-        border: "1px solid rgba(255,107,0,0.3)",
+        border: "1px solid rgba(0,200,150,0.3)",
         borderRadius: 99,
         px: { xs: 1.5, md: 2 },
         py: { xs: 0.5, md: 0.7 },
@@ -569,11 +568,11 @@ function HeroImage() {
         top: { xs: -12, md: -14 },
         right: { xs: "0%", md: "5%" },
         zIndex: 10,
-        background: "linear-gradient(135deg, rgba(255,107,0,0.9), rgba(255,80,0,0.8))",
+        background: "linear-gradient(135deg, rgba(0,200,150,0.9), rgba(0,160,120,0.8))",
         borderRadius: 99,
         px: { xs: 1.5, md: 2 },
         py: { xs: 0.5, md: 0.7 },
-        boxShadow: "0 8px 28px rgba(255,107,0,0.4)",
+        boxShadow: "0 8px 28px rgba(0,200,150,0.4)",
       }}>
         <Typography sx={{ fontSize: { xs: "0.65rem", md: "0.72rem" }, fontWeight: 800, color: "#fff", letterSpacing: "0.05em" }}>
           3+ Yrs Experience

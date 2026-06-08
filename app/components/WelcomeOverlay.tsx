@@ -32,7 +32,7 @@ export default function WelcomeOverlay() {
                             position: "absolute",
                             inset: 0,
                             background:
-                                "radial-gradient(ellipse 60% 45% at 50% 50%, rgba(255,107,0,0.12), transparent 70%)",
+                                "radial-gradient(ellipse 60% 45% at 50% 50%, rgba(0,200,150,0.14), transparent 70%)",
                             pointerEvents: "none",
                         }}
                     />
@@ -69,7 +69,7 @@ export default function WelcomeOverlay() {
                             style={{
                                 width: 52,
                                 height: 2,
-                                background: "linear-gradient(90deg, transparent, #FF6B00, transparent)",
+                                background: "linear-gradient(90deg, transparent, #00C896, transparent)",
                                 borderRadius: 99,
                                 marginBottom: 4,
                             }}
@@ -118,7 +118,7 @@ export default function WelcomeOverlay() {
                                 fontWeight: 400,
                                 letterSpacing: "0.12em",
                                 textTransform: "uppercase",
-                                color: "#FF6B00",
+                                color: "#00C896",
                             }}
                         >
                             Full Stack Developer &amp; Web Specialist
@@ -141,7 +141,7 @@ export default function WelcomeOverlay() {
                                 transition={{ duration: 2.1, ease: "easeInOut", delay: 0.2 }}
                                 style={{
                                     height: "100%",
-                                    background: "linear-gradient(90deg, #FF6B00, #FFAE73)",
+                                    background: "linear-gradient(90deg, #00C896, #00E5B0)",
                                     borderRadius: 99,
                                 }}
                             />

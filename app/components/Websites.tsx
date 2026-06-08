@@ -66,13 +66,13 @@ export default function Websites() {
             px: 2.5,
             py: 0.9,
             borderRadius: 99,
-            background: "rgba(255,107,0,0.1)",
-            border: "1px solid rgba(255,107,0,0.28)",
+            background: "rgba(0,200,150,0.1)",
+            border: "1px solid rgba(0,200,150,0.28)",
             mb: 2.5,
           }}
         >
-          <Box sx={{ width: 7, height: 7, borderRadius: "50%", background: "#FF6B00", boxShadow: "0 0 8px #FF6B00" }} />
-          <Typography sx={{ fontSize: "0.75rem", fontWeight: 700, color: "#FF6B00", letterSpacing: "0.06em", textTransform: "uppercase" }}>
+          <Box sx={{ width: 7, height: 7, borderRadius: "50%", background: "#00C896", boxShadow: "0 0 8px #00C896" }} />
+          <Typography sx={{ fontSize: "0.75rem", fontWeight: 700, color: "#00C896", letterSpacing: "0.06em", textTransform: "uppercase" }}>
             20+ Live Professional Websites Built &amp; Launched
           </Typography>
         </Box>
@@ -146,7 +146,7 @@ function WebsiteCard({ website, index }: { website: Website; index: number }) {
           transition: "all 0.32s cubic-bezier(0.23,1,0.32,1)",
           "&:hover .website-image": { transform: "scale(1.06)" },
           "&:hover": {
-            boxShadow: "0 24px 64px rgba(255,107,0,0.2), 0 4px 16px rgba(0,0,0,0.5)",
+            boxShadow: "0 24px 64px rgba(0,200,150,0.2), 0 4px 16px rgba(0,0,0,0.5)",
           },
         }}
       >
@@ -183,7 +183,7 @@ function WebsiteCard({ website, index }: { website: Website; index: number }) {
             sx={{
               height: 230,
               background:
-                "radial-gradient(ellipse at 25% 30%, rgba(255,107,0,0.3), transparent 55%), radial-gradient(ellipse at 75% 70%, rgba(255,174,115,0.12), transparent 55%), linear-gradient(135deg, #1c1c1c, #090909)",
+                "radial-gradient(ellipse at 25% 30%, rgba(0,200,150,0.3), transparent 55%), radial-gradient(ellipse at 75% 70%, rgba(0,229,176,0.12), transparent 55%), linear-gradient(135deg, #1c1c1c, #090909)",
               display: "grid",
               placeItems: "center",
             }}
@@ -252,7 +252,7 @@ function WebsiteCard({ website, index }: { website: Website; index: number }) {
 
           <Box sx={{ mt: "auto", pt: 1.4 }}>
             <MuiLink
-              href={website.url}
+              href={ensureHttps(website.url)}
               target="_blank"
               rel="noopener noreferrer"
               underline="none"
@@ -263,15 +263,15 @@ function WebsiteCard({ website, index }: { website: Website; index: number }) {
                 px: 2.1,
                 py: 1.15,
                 borderRadius: 99,
-                color: "#111",
-                background: "linear-gradient(135deg, #FF6B00, #FFAE73)",
+                color: "#fff",
+                background: "linear-gradient(135deg, #00C896, #00E5B0)",
                 fontWeight: 700,
                 letterSpacing: 0.2,
-                boxShadow: "0 8px 20px rgba(255, 107, 0, 0.28)",
+                boxShadow: "0 8px 20px rgba(0, 200, 150, 0.28)",
                 transition: "transform 0.2s ease, box-shadow 0.2s ease",
                 "&:hover": {
                   transform: "translateY(-1px)",
-                  boxShadow: "0 11px 24px rgba(255, 107, 0, 0.36)",
+                  boxShadow: "0 11px 24px rgba(0, 200, 150, 0.42)",
                 },
               }}
             >
@@ -304,10 +304,16 @@ function getPlatformStyle(platformRaw: string) {
   }
 
   return {
-    bg: "rgba(255, 107, 0, 0.16)",
-    color: "#FF6B00",
-    border: "1px solid rgba(255, 107, 0, 0.45)",
+    bg: "rgba(0, 200, 150, 0.16)",
+    color: "#00C896",
+    border: "1px solid rgba(0, 200, 150, 0.45)",
   };
+}
+
+function ensureHttps(url: string): string {
+  if (!url) return url;
+  if (url.startsWith("http://") || url.startsWith("https://")) return url;
+  return `https://${url}`;
 }
 
 type RawWebsite = Partial<Website> & { [key: string]: unknown };

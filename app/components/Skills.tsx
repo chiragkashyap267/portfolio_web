@@ -134,7 +134,7 @@ export default function Skills() {
                   p: { xs: 2, md: 3 },
                   textAlign: "center",
                   borderRadius: 3,
-                  color: "#FF6B00",
+                  color: "#00C896",
                   minHeight: { xs: 110, md: 140 },
                   display: "flex",
                   flexDirection: "column",
@@ -143,8 +143,8 @@ export default function Skills() {
                   gap: 1.5,
                   transition: "all 0.28s ease",
                   "&:hover": {
-                    boxShadow: "0 0 32px rgba(255,107,0,0.22), 0 8px 24px rgba(0,0,0,0.4)",
-                    borderColor: "rgba(255,107,0,0.35) !important",
+                    boxShadow: "0 0 32px rgba(0,200,150,0.22), 0 8px 24px rgba(0,0,0,0.4)",
+                    borderColor: "rgba(0,200,150,0.35) !important",
                     transform: "translateY(-4px)",
                   },
                 }}
@@ -154,7 +154,7 @@ export default function Skills() {
                     fontSize: { xs: 34, md: 42 },
                     display: "flex",
                     gap: 1.2,
-                    filter: "drop-shadow(0 0 8px rgba(255,107,0,0.4))",
+                    filter: "drop-shadow(0 0 8px rgba(0,200,150,0.4))",
                   }}
                 >
                   {skill.icon}
