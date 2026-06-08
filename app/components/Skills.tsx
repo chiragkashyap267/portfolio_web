@@ -11,19 +11,18 @@ import {
   FaJs,
   FaWordpress,
   FaShopify,
-  FaDocker,
-  FaCloud,
+  FaSearch,
 } from "react-icons/fa";
 import {
   SiNextdotjs,
   SiTailwindcss,
   SiBootstrap,
-  SiKubernetes,
   SiAdobephotoshop,
   SiCanva,
   SiCoreldraw,
-  SiAndroid,
+  SiFirebase,
 } from "react-icons/si";
+import { MdAnalytics } from "react-icons/md";
 
 const skills = [
   {
@@ -35,8 +34,12 @@ const skills = [
     icon: <SiNextdotjs />,
   },
   {
-    name: "Android (React Native)",
-    icon: <SiAndroid />,
+    name: "HTML / CSS / JavaScript",
+    icon: (
+      <>
+        <FaHtml5 /> <FaCss3Alt /> <FaJs />
+      </>
+    ),
   },
   {
     name: "Bootstrap / Tailwind CSS",
@@ -47,38 +50,30 @@ const skills = [
     ),
   },
   {
-    name: "Git / GitHub",
-    icon: <FaGitAlt />,
-  },
-  {
     name: "Node.js",
     icon: <FaNodeJs />,
   },
   {
-    name: "HTML / CSS / JavaScript",
-    icon: (
-      <>
-        <FaHtml5 /> <FaCss3Alt /> <FaJs />
-      </>
-    ),
+    name: "Firebase",
+    icon: <SiFirebase />,
   },
   {
-    name: "Cloud Basics",
-    icon: <FaCloud />,
-  },
-  {
-    name: "Docker / Kubernetes",
-    icon: (
-      <>
-        <FaDocker /> <SiKubernetes />
-      </>
-    ),
+    name: "Git / GitHub",
+    icon: <FaGitAlt />,
   },
   {
     name: "WordPress / Shopify",
     icon: (
       <>
         <FaWordpress /> <FaShopify />
+      </>
+    ),
+  },
+  {
+    name: "SEO & Analytics",
+    icon: (
+      <>
+        <FaSearch /> <MdAnalytics />
       </>
     ),
   },
@@ -118,18 +113,17 @@ export default function Skills() {
       </Box>
 
       <Grid container spacing={3} justifyContent="center">
-        {skills.map((skill) => (
+        {skills.map((skill, idx) => (
           <Grid key={skill.name} size={{ xs: 6, sm: 4, md: 3 }}>
             <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: idx * 0.05, ease: "easeOut" }}
               whileHover={{ y: -6 }}
-              transition={{
-                type: "spring",
-                stiffness: 180,
-                damping: 12,
-              }}
             >
               <Box
-                className="glass-card"
+                className="skill-card"
                 sx={{
                   p: { xs: 2, md: 3 },
                   textAlign: "center",
@@ -141,20 +135,46 @@ export default function Skills() {
                   alignItems: "center",
                   justifyContent: "center",
                   gap: 1.5,
+                  position: "relative",
+                  overflow: "hidden",
+                  background: "linear-gradient(145deg, rgba(255,255,255,0.055) 0%, rgba(255,255,255,0.015) 60%, rgba(0,200,150,0.025) 100%)",
+                  backdropFilter: "blur(16px) saturate(140%)",
+                  WebkitBackdropFilter: "blur(16px) saturate(140%)",
+                  border: "1px solid rgba(255,255,255,0.08)",
+                  borderTop: "1px solid rgba(0,200,150,0.1)",
                   transition: "all 0.28s ease",
                   "&:hover": {
-                    boxShadow: "0 0 32px rgba(0,200,150,0.22), 0 8px 24px rgba(0,0,0,0.4)",
-                    borderColor: "rgba(0,200,150,0.35) !important",
-                    transform: "translateY(-4px)",
+                    boxShadow: "0 0 32px rgba(0,200,150,0.18), 0 8px 24px rgba(0,0,0,0.4)",
+                    borderColor: "rgba(0,200,150,0.3)",
+                    "& .skill-icon": {
+                      filter: "drop-shadow(0 0 12px rgba(0,200,150,0.7))",
+                      transform: "scale(1.12)",
+                    },
+                  },
+                  // shimmer
+                  "&::after": {
+                    content: '""',
+                    position: "absolute",
+                    top: 0,
+                    left: "-100%",
+                    width: "60%",
+                    height: "100%",
+                    background: "linear-gradient(90deg, transparent, rgba(0,200,150,0.04), transparent)",
+                    transition: "left 0.55s ease",
+                  },
+                  "&:hover::after": {
+                    left: "140%",
                   },
                 }}
               >
                 <Box
+                  className="skill-icon"
                   sx={{
                     fontSize: { xs: 34, md: 42 },
                     display: "flex",
                     gap: 1.2,
-                    filter: "drop-shadow(0 0 8px rgba(0,200,150,0.4))",
+                    filter: "drop-shadow(0 0 8px rgba(0,200,150,0.35))",
+                    transition: "filter 0.28s ease, transform 0.28s ease",
                   }}
                 >
                   {skill.icon}
