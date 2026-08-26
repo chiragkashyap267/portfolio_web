@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Chirag Kashyap — Full Stack Web &amp; Mobile Developer</title>
+<meta name="description" content="Chirag Kashyap — Full Stack Web &amp; Mobile Developer building fast, scalable web apps and cross-platform mobile experiences with React, Next.js and React Native." />
+<meta name="theme-color" content="#0a0a0c" />
+
+<meta property="og:title" content="Chirag Kashyap — Full Stack Web &amp; Mobile Developer" />
+<meta property="og:description" content="React · Next.js · React Native · Node.js — 2+ years shipping fast, scalable products." />
+<meta property="og:type" content="website" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230a0a0c'/><text y='68' x='50' text-anchor='middle' font-size='54' font-family='monospace' fill='%23ff5f36'>C</text></svg>" />
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<!-- ============ LOADER ============ -->
+<div class="loader" id="loader">
+  <div class="loader__inner">
+    <div class="loader__name">CHIRAG&nbsp;KASHYAP</div>
+    <div class="loader__bar"><span id="loaderFill"></span></div>
+    <div class="loader__num"><span id="loaderNum">00</span></div>
+  </div>
+</div>
+
+<!-- ============ CURSOR ============ -->
+<div class="cursor" id="cursor" aria-hidden="true"></div>
+<div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
+
+<!-- ============ GRAIN + PROGRESS ============ -->
+<div class="grain" aria-hidden="true"></div>
+<div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+
+<!-- ============ NAV ============ -->
+<header class="nav" id="nav">
+  <a href="#home" class="nav__logo" data-cursor="link">
+    <span class="nav__logo-mark">CK</span>
+    <span class="nav__logo-dot"></span>
+  </a>
+  <nav class="nav__links">
+    <a href="#work" data-cursor="link"><span>Work</span></a>
+    <a href="#projects" data-cursor="link"><span>Projects</span></a>
+    <a href="#samples" data-cursor="link"><span>Samples</span></a>
+    <a href="#certificates" data-cursor="link"><span>Certificates</span></a>
+  </nav>
+  <a href="#contact" class="nav__cta" data-cursor="link">
+    <span class="nav__cta-in">Let's talk</span>
+  </a>
+  <button class="nav__burger" id="burger" aria-label="Open menu"><i></i><i></i></button>
+</header>
+
+<div class="menu" id="menu">
+  <a href="#work">Work</a>
+  <a href="#projects">Projects</a>
+  <a href="#samples">Samples</a>
+  <a href="#skills">Skills</a>
+  <a href="#certificates">Certificates</a>
+  <a href="#contact">Contact</a>
+</div>
+
+<main id="home">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" id="hero">
+    <div class="hero__stage" id="heroStage">
+      <div class="hero__meta reveal" data-delay="0">
+        <span class="mono">Noida, IN</span>
+        <span class="dot"></span>
+        <span class="mono">Available for full-time</span>
+      </div>
+
+      <h1 class="hero__title" aria-label="Chirag Kashyap">
+        <span class="line" data-depth="1">
+          <span class="w" data-text="CHIRAG"></span>
+        </span>
+        <span class="line line--2" data-depth="2">
+          <span class="w" data-text="KASHYAP"></span>
+        </span>
+      </h1>
+
+      <div class="hero__sub reveal" data-delay="120">
+        <span class="hero__sub-static">Full&nbsp;Stack</span>
+        <span class="cube" aria-hidden="true">
+          <span class="cube__inner" id="cube">
+            <span class="cube__face" style="--i:0">Web</span>
+            <span class="cube__face" style="--i:1">Mobile</span>
+            <span class="cube__face" style="--i:2">AI&nbsp;Apps</span>
+            <span class="cube__face" style="--i:3">Product</span>
+          </span>
+        </span>
+        <span class="hero__sub-static">Developer</span>
+      </div>
+
+      <p class="hero__lede reveal" data-delay="200">
+        2+ years turning ideas into <em>fast</em>, scalable products —
+        React&nbsp;· Next.js&nbsp;· React&nbsp;Native&nbsp;· Node.js.
+      </p>
+
+      <div class="hero__actions reveal" data-delay="280">
+        <a href="#projects" class="btn btn--solid" data-cursor="link"><span>See the work</span></a>
+        <a href="mailto:chiragkashyap26712@gmail.com" class="btn btn--ghost" data-cursor="link"><span>Email me</span></a>
+      </div>
+    </div>
+
+    <div class="hero__scroll">
+      <span class="mono">scroll</span>
+      <span class="hero__scroll-line"><i></i></span>
+    </div>
+
+    <!-- floating 3d chips -->
+    <div class="floaters" aria-hidden="true">
+      <span class="floater" style="--x:8%;  --y:26%; --z:-320px; --r:-14deg">React</span>
+      <span class="floater" style="--x:86%; --y:20%; --z:-460px; --r:12deg">Next.js</span>
+      <span class="floater" style="--x:14%; --y:74%; --z:-240px; --r:8deg">Node</span>
+      <span class="floater" style="--x:80%; --y:70%; --z:-380px; --r:-10deg">Firebase</span>
+      <span class="floater" style="--x:50%; --y:88%; --z:-540px; --r:6deg">React Native</span>
+    </div>
+  </section>
+
+  <!-- ============ MARQUEE ============ -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__track" id="marqueeTrack">
+      <span>React.js<i>◆</i>Next.js<i>◆</i>React Native<i>◆</i>Node.js<i>◆</i>Firebase<i>◆</i>MySQL<i>◆</i>Shopify<i>◆</i>WordPress<i>◆</i>Tailwind<i>◆</i></span>
+      <span>React.js<i>◆</i>Next.js<i>◆</i>React Native<i>◆</i>Node.js<i>◆</i>Firebase<i>◆</i>MySQL<i>◆</i>Shopify<i>◆</i>WordPress<i>◆</i>Tailwind<i>◆</i></span>
+    </div>
+  </div>
+
+  <!-- ============ PHOTO STACK / ABOUT ============ -->
+  <section class="photos" id="about">
+    <div class="photos__sticky">
+      <div class="photos__grid">
+
+        <div class="photos__copy">
+          <p class="eyebrow reveal"><span class="mono">01</span> — About</p>
+          <h2 class="h2 reveal">
+            I build things that
+            <span class="serif">feel</span> fast<br />
+            and <span class="serif">stay</span> reliable.
+          </h2>
+          <div class="photos__text" id="photoCopy">
+            <p class="pc active">Results-driven developer with 2+ years building responsive web apps and cross-platform mobile experiences — from first commit to production deploy.</p>
+            <p class="pc">Currently an Associate Software Engineer at Labhyansh, shipping React Native apps for iOS &amp; Android inside an AI-powered product suite.</p>
+            <p class="pc">20+ custom WordPress &amp; Shopify builds delivered, consistently landing 90+ Google PageSpeed scores and cleaner checkout flows.</p>
+            <p class="pc">MCA graduate with a 9.1 CGPA, and a habit of using AI-assisted workflows to cut delivery time by ~30%.</p>
+          </div>
+          <div class="stats">
+            <div class="stat reveal"><b data-count="2">0</b><span>+ yrs building</span></div>
+            <div class="stat reveal"><b data-count="24">0</b><span>+ sites shipped</span></div>
+            <div class="stat reveal"><b data-count="90">0</b><span>+ PageSpeed</span></div>
+            <div class="stat reveal"><b data-count="9.1" data-dec="1">0</b><span> CGPA · MCA</span></div>
+          </div>
+        </div>
+
+        <div class="photos__stageWrap">
+          <div class="photos__stage" id="photoStage">
+            <!-- Drop your images in assets/photos/ as 1.jpg … 5.jpg -->
+            <figure class="pcard" data-i="0" style="--hue:14">
+              <img src="assets/photos/profile.png" alt="Chirag Kashyap" />
+              <figcaption><span class="mono">01</span> Building</figcaption>
+            </figure>
+            <figure class="pcard" data-i="1" style="--hue:200">
+              <img src="assets/work/luxeberry.png" alt="Luxeberry — Shopify storefront" loading="lazy" />
+              <figcaption><span class="mono">02</span> Shipping</figcaption>
+            </figure>
+            <figure class="pcard" data-i="2" style="--hue:280">
+              <img src="assets/work/vayuwarn.png" alt="Vayu-WARN — real-time disaster alert app" loading="lazy" />
+              <figcaption><span class="mono">03</span> Debugging</figcaption>
+            </figure>
+            <figure class="pcard" data-i="3" style="--hue:44">
+              <img src="assets/work/mocklyai.png" alt="Mockly AI — voice-to-voice interview platform" loading="lazy" />
+              <figcaption><span class="mono">04</span> Learning</figcaption>
+            </figure>
+            <figure class="pcard" data-i="4" style="--hue:150">
+              <img src="assets/work/moonburst.png" alt="Moonburst Jewellery — Shopify storefront" loading="lazy" />
+              <figcaption><span class="mono">05</span> Repeat</figcaption>
+            </figure>
+          </div>
+          <div class="photos__idx"><span id="photoIdx">01</span><i>/</i><span>05</span></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ EXPERIENCE ============ -->
+  <section class="sect" id="work">
+    <div class="wrap">
+      <p class="eyebrow reveal"><span class="mono">02</span> — Experience</p>
+      <h2 class="h2 reveal">Where I've <span class="serif">shipped</span>.</h2>
+
+      <div class="tl">
+        <div class="tl__line"><i id="tlFill"></i></div>
+
+        <article class="job reveal" data-cursor="tilt">
+          <div class="job__when"><span class="mono">Jun 2026 — Present</span></div>
+          <div class="job__body">
+            <h3>Associate Software Engineer</h3>
+            <p class="job__co">Labhyansh Account Simplified <span>· Noida</span></p>
+            <ul>
+              <li>Building cross-platform iOS &amp; Android apps with <b>React Native</b> as part of the company's AI-powered application suite.</li>
+              <li>Developing custom web solutions in <b>Next.js</b> and <b>React.js</b> to support scalable, AI-driven product features.</li>
+              <li>Collaborating with cross-functional teams to design and ship AI-integrated features across web and mobile.</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="job reveal" data-cursor="tilt">
+          <div class="job__when"><span class="mono">Jan 2026 — Jun 2026</span></div>
+          <div class="job__body">
+            <h3>Web Developer Intern</h3>
+            <p class="job__co">Growthpandit Pvt. Ltd. <span>· Remote</span></p>
+            <ul>
+              <li>Built and deployed <b>4+ full-stack web apps</b> with React.js/Next.js on Vercel — cutting delivery time by 30%.</li>
+              <li>Delivered <b>20+ custom WordPress/Shopify</b> solutions, consistently achieving 90+ Google PageSpeed scores.</li>
+              <li>Integrated <b>Razorpay</b> (Magic Checkout, COD) and resolved shipping/coupon-sync issues for reliable checkout.</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="job reveal" data-cursor="tilt">
+          <div class="job__when"><span class="mono">Jan 2023 — Jul 2024</span></div>
+          <div class="job__body">
+            <h3>Web Developer Intern</h3>
+            <p class="job__co">Elem Consumer Tech Pvt. Ltd. <span>· Onsite</span></p>
+            <ul>
+              <li>Developed and maintained the company's <b>Shopify storefront</b>, including custom themes and UI components.</li>
+              <li>Improved engagement and conversion rates by <b>20%</b> through targeted creative and content updates.</li>
+              <li>Built responsive React.js interfaces achieving 90+ PageSpeed scores.</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PROJECTS ============ -->
+  <section class="sect sect--projects" id="projects">
+    <div class="wrap">
+      <p class="eyebrow reveal"><span class="mono">03</span> — Selected work</p>
+      <h2 class="h2 reveal">Three things I'm <span class="serif">proud</span> of.</h2>
+    </div>
+
+    <div class="cards">
+      <article class="card reveal" data-tilt style="--hue:18">
+        <div class="card__inner">
+          <div class="card__top">
+            <span class="card__num mono">01</span>
+            <span class="card__tag mono">Capstone · Team Lead</span>
+          </div>
+          <h3 class="card__title">Mockly&nbsp;AI</h3>
+          <p class="card__kicker">AI-Powered Mock Interview Platform</p>
+          <p class="card__desc">A real-time, voice-to-voice AI platform that simulates live interview sessions, analyses candidate responses and delivers instant feedback. Built as the MCA final-year capstone.</p>
+          <ul class="chips">
+            <li>Next.js</li><li>Voice-to-Voice AI</li><li>Vercel</li>
+          </ul>
+          <span class="card__glow"></span>
+        </div>
+      </article>
+
+      <article class="card reveal" data-tilt style="--hue:196">
+        <div class="card__inner">
+          <div class="card__top">
+            <span class="card__num mono">02</span>
+            <span class="card__tag mono">Realtime · Civic</span>
+          </div>
+          <h3 class="card__title">Vayu&#8209;WARN</h3>
+          <p class="card__kicker">Real-Time Disaster Alert System</p>
+          <p class="card__desc">Community-reported emergencies surfaced instantly on an interactive Leaflet map, with serverless role-based access control for live emergency tracking.</p>
+          <ul class="chips">
+            <li>Next.js</li><li>Firebase</li><li>Leaflet</li><li>Vercel</li>
+          </ul>
+          <span class="card__glow"></span>
+        </div>
+      </article>
+
+      <article class="card reveal" data-tilt style="--hue:275">
+        <div class="card__inner">
+          <div class="card__top">
+            <span class="card__num mono">03</span>
+            <span class="card__tag mono">95+ Lighthouse</span>
+          </div>
+          <h3 class="card__title">Chirag.dev</h3>
+          <p class="card__kicker">Personal Developer Portfolio</p>
+          <p class="card__desc">A full-featured portfolio with a custom admin panel for dynamic content via Firebase — 95+ Lighthouse through SSR, lazy loading and Next.js image optimisation.</p>
+          <ul class="chips">
+            <li>Next.js</li><li>Tailwind</li><li>Firebase</li><li>Vercel</li>
+          </ul>
+          <span class="card__glow"></span>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ SAMPLE WORK GALLERY ============ -->
+  <section class="sect sect--tint" id="samples">
+    <div class="wrap">
+      <p class="eyebrow reveal"><span class="mono">04</span> — Sample work</p>
+      <h2 class="h2 reveal">Sites &amp; apps I've <span class="serif">delivered</span>.</h2>
+      <p class="sect__lede reveal">A cross-section of client and personal builds — WordPress themes, Shopify storefronts, Next.js apps and React interfaces. Filter by stack.</p>
+
+      <div class="filters reveal" id="filters"><!-- built from data.js --></div>
+      <div class="gallery" id="gallery"><!-- built from data.js --></div>
+    </div>
+  </section>
+
+  <!-- ============ SKILLS ============ -->
+  <section class="sect" id="skills">
+    <div class="wrap">
+      <p class="eyebrow reveal"><span class="mono">05</span> — Toolkit</p>
+      <h2 class="h2 reveal">The <span class="serif">stack</span> I reach for.</h2>
+
+      <div class="skills">
+        <div class="skillgrp reveal"><h4>Languages</h4><ul><li>JavaScript</li><li>Java</li><li>SQL</li></ul></div>
+        <div class="skillgrp reveal"><h4>Frontend</h4><ul><li>React.js</li><li>Next.js</li><li>HTML5</li><li>CSS3</li><li>Tailwind CSS</li><li>Bootstrap</li></ul></div>
+        <div class="skillgrp reveal"><h4>Mobile</h4><ul><li>React Native (iOS &amp; Android)</li></ul></div>
+        <div class="skillgrp reveal"><h4>Backend</h4><ul><li>Node.js</li><li>Express.js</li><li>EJS</li><li>REST APIs</li></ul></div>
+        <div class="skillgrp reveal"><h4>Databases</h4><ul><li>MySQL</li><li>Firebase</li></ul></div>
+        <div class="skillgrp reveal"><h4>CMS &amp; E-Commerce</h4><ul><li>WordPress</li><li>Shopify (Liquid)</li><li>Theme Customisation</li><li>Razorpay</li></ul></div>
+        <div class="skillgrp reveal"><h4>Tools &amp; Platforms</h4><ul><li>Git</li><li>GitHub</li><li>Vercel</li><li>Netlify</li></ul></div>
+        <div class="skillgrp reveal"><h4>Other</h4><ul><li>AI-Assisted Development</li><li>Prompt Engineering</li><li>Responsive Design</li><li>SEO</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CERTIFICATES ============ -->
+  <section class="sect sect--tint" id="certificates">
+    <div class="wrap">
+      <p class="eyebrow reveal"><span class="mono">06</span> — Certifications</p>
+      <h2 class="h2 reveal">Paper that backs the <span class="serif">practice</span>.</h2>
+      <p class="sect__lede reveal">Click any certificate to view it full size.</p>
+
+      <div class="certgrid" id="certgrid"><!-- built from data.js --></div>
+    </div>
+  </section>
+
+  <!-- ============ EDUCATION ============ -->
+  <section class="sect">
+    <div class="wrap">
+      <p class="eyebrow reveal"><span class="mono">07</span> — Education</p>
+      <h2 class="h2 reveal">Where I <span class="serif">studied</span>.</h2>
+      <div class="wrap two" style="padding:0">
+        <div class="edu reveal">
+          <h3>Master of Computer Applications</h3>
+          <p class="edu__meta">GB Pant Engineering College, Pauri Garhwal</p>
+          <p class="edu__row"><span class="mono">Jun 2024 — Jun 2026</span><b>CGPA 9.1</b></p>
+        </div>
+        <div class="edu reveal">
+          <h3>B.Sc. Computer Science</h3>
+          <p class="edu__meta">KL DAV PG College, Roorkee</p>
+          <p class="edu__row"><span class="mono">2021 — 2024</span><b>CGPA 6.5</b></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT ============ -->
+  <section class="contact" id="contact">
+    <div class="wrap">
+      <p class="eyebrow reveal"><span class="mono">08</span> — Contact</p>
+      <h2 class="contact__big reveal">
+        <span>Let's build</span>
+        <span class="serif">something</span>
+        <span>together.</span>
+      </h2>
+
+      <a href="mailto:chiragkashyap26712@gmail.com" class="contact__mail reveal" data-cursor="link">
+        chiragkashyap26712@gmail.com
+      </a>
+
+      <div class="contact__rows">
+        <a class="crow reveal" href="tel:+919548174325" data-cursor="link"><span class="mono">Phone</span><b>+91 95481 74325</b><i>↗</i></a>
+        <a class="crow reveal" href="https://www.linkedin.com/in/chirag-rajput-00405633b/" target="_blank" rel="noopener" data-cursor="link"><span class="mono">LinkedIn</span><b>/in/chirag-rajput</b><i>↗</i></a>
+        <a class="crow reveal" href="https://github.com/chiragkashyap267" target="_blank" rel="noopener" data-cursor="link"><span class="mono">GitHub</span><b>@chiragkashyap267</b><i>↗</i></a>
+        <a class="crow reveal" href="assets/resume.pdf" target="_blank" rel="noopener" data-cursor="link"><span class="mono">Résumé</span><b>Download PDF</b><i>↗</i></a>
+        <a class="crow reveal" href="#" data-cursor="link"><span class="mono">Location</span><b>Noida, Uttar Pradesh</b><i>↗</i></a>
+      </div>
+    </div>
+
+    <footer class="foot">
+      <span class="mono">© <span id="yr">2026</span> Chirag Kashyap</span>
+      <span class="mono">Built with vanilla JS &amp; too much coffee</span>
+      <a href="#home" class="mono" data-cursor="link">Back to top ↑</a>
+    </footer>
+  </section>
+
+</main>
+
+<!-- ============ MOBILE ACTION BAR ============ -->
+<div class="mobar" id="mobar">
+  <a class="mobar__btn mobar__btn--primary" href="mailto:chiragkashyap26712@gmail.com">Email me</a>
+  <a class="mobar__btn" href="tel:+919548174325">Call</a>
+</div>
+
+<!-- ============ LIGHTBOX ============ -->
+<div class="lb" id="lightbox" role="dialog" aria-modal="true" aria-label="Certificate viewer">
+  <button class="lb__close" id="lbClose" aria-label="Close">✕</button>
+  <div class="lb__box" id="lbBox"></div>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
